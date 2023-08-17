@@ -1,11 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:incosys/src/inventory/pages/inventory.page.dart';
 import 'package:incosys/src/login/pages/login.page.dart';
 import 'package:incosys/src/home/pages/home.page.dart';
 import 'package:incosys/src/shared/navbar/screen/navbar.screen.dart';
 
+final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
+final GlobalKey<NavigatorState> _shellNavigator =
+    GlobalKey(debugLabel: 'shell');
+
 // GoRouter configuration
 final appRouter = GoRouter(
+  navigatorKey: _rootNavigator,
   initialLocation: '/login',
   routes: [
     GoRoute(
@@ -14,15 +20,21 @@ final appRouter = GoRouter(
       builder: (context, state) => const LoginPage(),
     ),
     ShellRoute(
+        navigatorKey: _shellNavigator,
         builder: (context, state, child) {
           return NavbarScreen(childView: child);
         },
         routes: [
-          GoRoute(path: '/home', builder: (context, state) => const HomePage()),
           GoRoute(
-            path: '/inventario',
-            builder: (context, state) => const InventoryPage(),
-          ),
+              path: '/',
+              builder: (context, state) => const HomePage(),
+              routes: [
+                GoRoute(
+                  parentNavigatorKey: _rootNavigator,
+                  path: 'inventario',
+                  builder: (context, state) => const InventoryPage(),
+                ),
+              ]),
         ]),
   ],
 );

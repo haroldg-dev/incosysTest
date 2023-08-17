@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:incosys/src/inventory/pages/scanner.page.dart';
 import 'package:incosys/src/inventory/widgets/codigo_textfield.dart';
+import 'package:image_picker/image_picker.dart';
 
 class InventoryPage extends ConsumerStatefulWidget {
   static const String name = 'inventory_page';
@@ -14,9 +17,82 @@ class InventoryPage extends ConsumerStatefulWidget {
 }
 
 class InventoryPageState extends ConsumerState<InventoryPage> {
+  List<XFile>? fotoArticulos;
+  XFile? etiqueta;
+
+  final ImagePicker imgpicker = ImagePicker();
+
   @override
   void initState() {
     super.initState();
+  }
+
+  Future getImage(ImageSource media) async {
+    var img = await imgpicker.pickImage(source: media);
+
+    setState(() {
+      etiqueta = img;
+    });
+  }
+
+  void myAlert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            title: Text('Please choose media to select'),
+            content: Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    //if user click this button, user can upload image from gallery
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.gallery);
+                    },
+                    child: const Row(
+                      children: [
+                        Icon(Icons.image),
+                        Text('From Gallery'),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    //if user click this button. user can upload image from camera
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.camera);
+                    },
+                    child: const Row(
+                      children: [
+                        Icon(Icons.camera),
+                        Text('From Camera'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  openImages() async {
+    try {
+      var pickedfiles = await imgpicker.pickMultiImage();
+      //you can use ImageCourse.camera for Camera capture
+      if (pickedfiles != null) {
+        fotoArticulos = pickedfiles;
+        setState(() {});
+      } else {
+        print("No image is selected.");
+      }
+    } catch (e) {
+      print("error while picking file.");
+    }
   }
 
   @override
@@ -31,7 +107,8 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
       body: PageView(
         children: [
           SafeArea(
-              child: Column(
+              child: SingleChildScrollView(
+                  child: Column(
             children: [
               const SizedBox(
                 height: 20,
@@ -151,7 +228,59 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
               const SizedBox(
                 height: 5,
               ),
-              //FOTOS
+              //Foto Etiqueta
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                child: ElevatedButton(
+                    onPressed: () {
+                      myAlert();
+                    },
+                    child: const Text("Etiqueta")),
+              ),
+              etiqueta != null
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.file(
+                          //to show image, you type like this.
+                          File(etiqueta!.path),
+                          fit: BoxFit.cover,
+                          width: MediaQuery.of(context).size.width,
+                          height: 300,
+                        ),
+                      ),
+                    )
+                  : const Text(
+                      "No Image",
+                      style: TextStyle(fontSize: 20),
+                    ),
+              //Foto Etiqueta
+              //Fotos Articulo
+              fotoArticulos != null
+                  ? Wrap(
+                      children: fotoArticulos!.map((articulo) {
+                        return Card(
+                          child: SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: Image.file(File(articulo.path)),
+                          ),
+                        );
+                      }).toList(),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 40),
+                      child: ElevatedButton(
+                          onPressed: () {
+                            openImages();
+                          },
+                          child: const Text("Articulos")),
+                    ),
+
+              //Fotos Articulo
 
               const SizedBox(
                 height: 5,
@@ -168,7 +297,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                             backgroundColor:
                                 const Color.fromARGB(255, 0, 0, 0)),
                         onPressed: () {
-                          context.go('/home');
+                          context.go('/');
                         },
                         child: const Text(
                           'Salir',
@@ -186,7 +315,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                             backgroundColor:
                                 const Color.fromARGB(255, 0, 0, 0)),
                         onPressed: () {
-                          context.go('/home');
+                          context.go('/');
                         },
                         child: const Text(
                           'Grabar',
@@ -202,7 +331,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                 ),
               ),
             ],
-          ))
+          )))
         ],
       ),
     );

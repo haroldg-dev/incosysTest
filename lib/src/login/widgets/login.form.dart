@@ -125,7 +125,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                       content: Text(ref.watch(seguridadUserProvider).log),
                     ));
                   } else {
-                    context.go('/home');
+                    context.go('/');
                   }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
