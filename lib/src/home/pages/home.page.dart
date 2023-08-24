@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:incosys/src/home/pages/scanner.page.dart';
-
-import '../../shared/helpers/epartnet.icons.dart';
+import 'package:incosys/src/home/providers/almacen.provider.dart';
+import 'package:incosys/src/home/widgets/almacen_dropdown.dart';
+import 'package:incosys/src/shared/widgets/textfield_v1.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   static const String name = 'home_page';
@@ -18,9 +19,8 @@ class HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
+    ref.read(almacenProvider.notifier).getAlmacenes();
   }
-
-  final almacenes = ['1', '2', '3'];
 
   @override
   Widget build(BuildContext context) {
@@ -44,30 +44,10 @@ class HomePageState extends ConsumerState<HomePage> {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                child: ButtonTheme(
-                    alignedDropdown: true,
-                    child: DropdownButtonFormField<String>(
-                        isExpanded: true,
-                        icon: const Icon(Icons.menu),
-                        hint: const Text("Seleccione almacen"),
-                        decoration: InputDecoration(
-                          label: const Text('Almacen'),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                        ),
-                        value: almacenController,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            almacenController = newValue;
-                          });
-                        },
-                        items: almacenes
-                            .map((op) => DropdownMenuItem(
-                                  value: op,
-                                  child: Text(op),
-                                ))
-                            .toList())),
+                child: AlmacenDropdown(
+                  controller: almacenController,
+                  list: ref.watch(almacenProvider),
+                ),
               ),
               const SizedBox(
                 height: 30,
@@ -80,28 +60,10 @@ class HomePageState extends ConsumerState<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Flexible(
-                      child: TextField(
+                      child: VersionOneTextField(
                         controller: ubicacionController,
-                        decoration: const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                width: 0,
-                                color: Color.fromRGBO(255, 255, 255, 1)),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(width: 2, color: Color(0xFFDADADA)),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                          ),
-                          filled: true,
-                          fillColor: Color(0xFFF2F2F2),
-                          hintText: 'Ubicación',
-                          prefixIcon: Icon(Icons.location_on_outlined),
-                        ),
-                        keyboardType: TextInputType.text,
+                        name: "Ubicacion",
+                        type: TextInputType.text,
                       ),
                     ),
                     IconButton(
@@ -124,26 +86,10 @@ class HomePageState extends ConsumerState<HomePage> {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                child: TextField(
+                child: VersionOneTextField(
                   controller: conteoController,
-                  decoration: const InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 0, color: Color.fromRGBO(255, 255, 255, 1)),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 2, color: Color(0xFFDADADA)),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    filled: true,
-                    fillColor: Color(0xFFF2F2F2),
-                    hintText: 'Conteo',
-                    prefixIcon: Icon(EPartnerIcons.layer_group,
-                        color: Color.fromARGB(255, 0, 0, 0), size: 25),
-                  ),
-                  keyboardType: TextInputType.number,
+                  name: "Conteo",
+                  type: TextInputType.number,
                 ),
               ),
               //Conteo
@@ -196,25 +142,6 @@ class HomePageState extends ConsumerState<HomePage> {
             ],
           ))
         ],
-      ),
-    );
-  }
-}
-
-//TITULO HOME
-class TituloHome extends StatelessWidget {
-  const TituloHome({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text(
-      'Home Page',
-      style: TextStyle(
-        fontFamily: 'Roboto',
-        fontSize: 20,
-        fontWeight: FontWeight.w900,
       ),
     );
   }

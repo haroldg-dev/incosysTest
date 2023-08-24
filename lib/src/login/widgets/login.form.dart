@@ -18,9 +18,9 @@ class LoginFormState extends ConsumerState<LoginForm> {
     final user = TextEditingController();
     final password = TextEditingController();
 
-    ruc.text = '11111111111';
+    ruc.text = '20603280157';
     user.text = 'esau.hernandez@gmail.com';
-    password.text = '10132576645725..';
+    password.text = '88552233';
 
     return Column(
       children: [

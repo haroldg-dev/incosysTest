@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:incosys/src/inventory/pages/scanner.page.dart';
-import 'package:incosys/src/inventory/widgets/codigo_textfield.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:incosys/src/shared/widgets/textfield_v1.dart';
 
 class InventoryPage extends ConsumerStatefulWidget {
   static const String name = 'inventory_page';
@@ -42,8 +42,8 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
           return AlertDialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            title: Text('Please choose media to select'),
-            content: Container(
+            title: const Text('Please choose media to select'),
+            content: SizedBox(
               height: MediaQuery.of(context).size.height / 6,
               child: Column(
                 children: [
@@ -98,6 +98,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
   @override
   Widget build(BuildContext context) {
     final codigoController = TextEditingController();
+    final descripcionController = TextEditingController();
     final cantidadController = TextEditingController();
 
     return Scaffold(
@@ -118,21 +119,20 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                 height: 5,
               ),
               const UbicacionInventory(),
-              const SizedBox(
-                height: 5,
-              ),
               //Codigo
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Flexible(
-                        child: CodigoTextField(
-                      controller: codigoController,
-                      name: "Codigo",
-                    )),
+                      child: VersionOneTextField(
+                        controller: codigoController,
+                        name: "Codigo",
+                        type: TextInputType.text,
+                      ),
+                    ),
                     IconButton(
                       icon: const Icon(Icons.qr_code_scanner),
                       onPressed: () => showDialog<String>(
@@ -145,39 +145,21 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                 ),
               ),
               //Codigo
-              const SizedBox(
-                height: 5,
-              ),
               //Descripcion
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
-                child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 0, color: Color.fromRGBO(255, 255, 255, 1)),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 2, color: Color(0xFFDADADA)),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    filled: true,
-                    fillColor: Color(0xFFF2F2F2),
-                    hintText: 'Descripción',
-                  ),
-                  keyboardType: TextInputType.multiline,
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                child: VersionOneTextField(
+                  controller: descripcionController,
+                  name: "Descripcion",
+                  type: TextInputType.multiline,
                 ),
               ),
               //Descripcion
-              const SizedBox(
-                height: 5,
-              ),
               //Cantidad
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                 child: TextField(
                   controller: cantidadController,
                   decoration: const InputDecoration(
@@ -199,12 +181,9 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                 ),
               ),
               //Cantidad
-              const SizedBox(
-                height: 5,
-              ),
               //Observacion
               const Padding(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                 child: TextField(
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -222,73 +201,110 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                     hintText: 'Observación',
                   ),
                   keyboardType: TextInputType.multiline,
+                  minLines: 2,
+                  maxLines: 4,
                 ),
               ),
               //Observacion
-              const SizedBox(
-                height: 5,
-              ),
-              //Foto Etiqueta
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
-                child: ElevatedButton(
-                    onPressed: () {
-                      myAlert();
-                    },
-                    child: const Text("Etiqueta")),
-              ),
-              etiqueta != null
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.file(
-                          //to show image, you type like this.
-                          File(etiqueta!.path),
-                          fit: BoxFit.cover,
-                          width: MediaQuery.of(context).size.width,
-                          height: 300,
-                        ),
-                      ),
-                    )
-                  : const Text(
-                      "No Image",
-                      style: TextStyle(fontSize: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //Foto Etiqueta
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 10),
+                    child: SizedBox(
+                      width: 130,
+                      height: 130,
+                      child: etiqueta != null
+                          ? Column(children: [
+                              const Text(
+                                "Etiqueta",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w700,
+                                    color: Color.fromARGB(255, 0, 0, 0)),
+                              ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Image.file(
+                                  //to show image, you type like this.
+                                  File(etiqueta!.path),
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            ])
+                          : OutlinedButton(
+                              onPressed: () {
+                                myAlert();
+                              },
+                              style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  foregroundColor:
+                                      const Color.fromARGB(255, 0, 0, 0)),
+                              child: const Text(
+                                'Etiqueta',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'Roboto',
+                                    fontWeight: FontWeight.w700,
+                                    color: Color.fromARGB(255, 0, 0, 0)),
+                              ),
+                            ),
                     ),
-              //Foto Etiqueta
-              //Fotos Articulo
-              fotoArticulos != null
-                  ? Wrap(
-                      children: fotoArticulos!.map((articulo) {
-                        return Card(
-                          child: SizedBox(
-                            height: 100,
-                            width: 100,
-                            child: Image.file(File(articulo.path)),
-                          ),
-                        );
-                      }).toList(),
-                    )
-                  : Padding(
+                  ),
+                  //Foto Etiqueta
+                  //Fotos Articulo
+                  Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 40),
-                      child: ElevatedButton(
-                          onPressed: () {
-                            openImages();
-                          },
-                          child: const Text("Articulos")),
-                    ),
-
-              //Fotos Articulo
-
+                          vertical: 10, horizontal: 10),
+                      child: SizedBox(
+                        width: 130,
+                        height: 130,
+                        child: fotoArticulos != null
+                            ? Wrap(
+                                children: fotoArticulos!.map((articulo) {
+                                  return Card(
+                                    child: Image.file(
+                                      File(articulo.path),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  );
+                                }).toList(),
+                              )
+                            : OutlinedButton(
+                                onPressed: () {
+                                  openImages();
+                                },
+                                style: OutlinedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    foregroundColor:
+                                        const Color.fromARGB(255, 0, 0, 0)),
+                                child: const Text(
+                                  'Articulos',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w700,
+                                      color: Color.fromARGB(255, 0, 0, 0)),
+                                ),
+                              ),
+                      )),
+                  //Fotos Articulo
+                ],
+              ),
               const SizedBox(
                 height: 5,
               ),
               //Buttons
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 70),
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 70),
                 child: Row(
                   children: <Widget>[
                     Expanded(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:incosys/src/shared/navbar/widgets/navbar_drawer.dart';
-import 'package:incosys/src/shared/widgets/bottom_nav_bar.dart';
+import 'package:incosys/src/shared/navbar/widgets/bottom_nav_bar.dart';
 
 class NavbarScreen extends ConsumerStatefulWidget {
   // static const name = 'home-screen';
