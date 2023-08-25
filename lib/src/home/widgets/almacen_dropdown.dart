@@ -36,7 +36,7 @@ class AlmacenDropdownState extends ConsumerState<AlmacenDropdown> {
             },
             items: widget.list
                 .map((op) => DropdownMenuItem(
-                      value: op.nomAlmacen,
+                      value: op.codAlmacen.toString(),
                       child: Text(op.nomAlmacen),
                     ))
                 .toList()));

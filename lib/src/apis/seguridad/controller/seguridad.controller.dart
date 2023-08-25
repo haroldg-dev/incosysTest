@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:incosys/src/apis/seguridad/entities/seguridad.user.entity.dart';
-import 'package:incosys/src/apis/seguridad/model/seguridad.model.dart';
+import 'package:incosys/src/apis/seguridad/model/seguridad.response.dart';
 import 'package:incosys/src/apis/seguridad/model/seguridad.mapper.dart';
 import 'package:incosys/src/shared/config/constanst.dart';
 

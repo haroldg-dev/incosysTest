@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,8 +11,9 @@ import 'package:incosys/src/shared/widgets/textfield_v1.dart';
 
 class InventoryPage extends ConsumerStatefulWidget {
   static const String name = 'inventory_page';
+  String? nomAlmacen;
 
-  const InventoryPage({super.key});
+  InventoryPage({super.key, String? nomAlmacen});
 
   @override
   InventoryPageState createState() => InventoryPageState();
@@ -114,7 +117,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
               const SizedBox(
                 height: 20,
               ),
-              const AlmacenInventory(),
+              AlmacenInventory(nomAlmacen: widget.nomAlmacen),
               const SizedBox(
                 height: 5,
               ),
@@ -356,15 +359,14 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
 
 //ALMACEN NAME
 class AlmacenInventory extends StatelessWidget {
-  const AlmacenInventory({
-    super.key,
-  });
+  String? nomAlmacen;
+  AlmacenInventory({super.key, this.nomAlmacen});
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'AlmacenInventory Name',
-      style: TextStyle(
+    return Text(
+      nomAlmacen!,
+      style: const TextStyle(
         fontFamily: 'Roboto',
         fontSize: 20,
         fontWeight: FontWeight.w900,

@@ -13,6 +13,12 @@ class LoginPage extends StatelessWidget {
       backgroundColor: const Color(0xFFF2F2F2),
       // ignore: avoid_unnecessary_containers
       body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("lib/src/asset/images/fondopag1.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: PageView(
           children: [
             SafeArea(
@@ -23,7 +29,7 @@ class LoginPage extends StatelessWidget {
                   ),
                   const Logo(),
                   const SizedBox(
-                    height: 80,
+                    height: 5,
                   ),
                   const TituloLogin(),
                   const SizedBox(
@@ -33,7 +39,7 @@ class LoginPage extends StatelessWidget {
                   Expanded(child: Container()),
                   const Autor(),
                   const SizedBox(
-                    height: 20,
+                    height: 40,
                   )
                 ],
               ),
@@ -57,8 +63,8 @@ class Logo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
-          'lib/src/asset/images/logored.png',
-          width: 150,
+          'lib/src/asset/images/logoincosys.png',
+          width: 45,
         ),
       ],
     );
@@ -74,12 +80,12 @@ class TituloLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
-      'Iniciar Sesión',
+      'INCOSYS',
       style: TextStyle(
-        fontFamily: 'Roboto',
-        fontSize: 20,
-        fontWeight: FontWeight.w900,
-      ),
+          fontFamily: 'Roboto',
+          fontSize: 28,
+          fontWeight: FontWeight.w900,
+          color: Colors.white),
     );
   }
 }
@@ -107,30 +113,26 @@ class Autor extends StatelessWidget {
     return const Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          'INCOSYS ',
-          style: TextStyle(
-              fontSize: 12,
-              fontFamily: 'Roboto',
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF000000)),
-        ),
+        Text('INCOSYS ',
+            style: TextStyle(
+                fontSize: 14,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w700,
+                color: Color.fromRGBO(255, 180, 184, 1))),
         Text(
           'Version ',
           style: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w400,
-              color: Color(0xFF000000)),
+              color: Colors.white),
         ),
-        Text(
-          '1.0',
-          style: TextStyle(
-              fontSize: 12,
-              fontFamily: 'Roboto',
-              fontWeight: FontWeight.w900,
-              color: Color(0xFF000000)),
-        )
+        Text('1.0',
+            style: TextStyle(
+                fontSize: 14,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w900,
+                color: Colors.white)),
       ],
     );
   }

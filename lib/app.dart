@@ -19,7 +19,16 @@ final appRouter = GoRouter(
       name: LoginPage.name,
       builder: (context, state) => const LoginPage(),
     ),
-    ShellRoute(
+    GoRoute(path: '/', builder: (context, state) => const HomePage(), routes: [
+      GoRoute(
+        parentNavigatorKey: _rootNavigator,
+        path: 'inventario/:nomAlmacen',
+        name: 'inventario',
+        builder: (context, state) =>
+            InventoryPage(nomAlmacen: state.pathParameters['nomAlmacen']),
+      ),
+    ]),
+    /* ShellRoute(
         navigatorKey: _shellNavigator,
         builder: (context, state, child) {
           return NavbarScreen(childView: child);
@@ -31,10 +40,12 @@ final appRouter = GoRouter(
               routes: [
                 GoRoute(
                   parentNavigatorKey: _rootNavigator,
-                  path: 'inventario',
-                  builder: (context, state) => const InventoryPage(),
+                  path: 'inventario/:nomAlmacen',
+                  name: 'inventario',
+                  builder: (context, state) => InventoryPage(
+                      nomAlmacen: state.pathParameters['nomAlmacen']),
                 ),
               ]),
-        ]),
+        ]), */
   ],
 );
