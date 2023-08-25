@@ -14,6 +14,7 @@ class UbicacionController {
     String token = '',
     String codAlmacen = '',
     String nomUbicacion = '',
+    String nomAlmacen = '',
   }) async {
     final authenticatedUser = {
       "ruc": ruc,
@@ -21,15 +22,15 @@ class UbicacionController {
       "pwd": pwd,
       "token": token,
       "cod_almacen": codAlmacen,
-      "nom_ubicacion": nomUbicacion
+      "nom_ubicacion": nomUbicacion,
     };
 
     final response =
         await dio.post('/Inventario/getUbicacion', data: authenticatedUser);
     final ubicacionResponse = UbicacionResponse.fromJson(response.data[0]);
 
-    final Ubicacion ubicacion = UbicacionMapper.articleToEntity(
-        ubicacionResponse.data![0], response.data[0]["resultado"]);
+    final Ubicacion ubicacion = UbicacionMapper.dataToEntity(
+        ubicacionResponse.data![0], response.data[0]["resultado"], nomAlmacen);
 
     return ubicacion;
   }

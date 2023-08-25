@@ -3,6 +3,7 @@ class Ubicacion {
   final int codUbicacion;
   final int codAlmacen;
   final String nomUbicacion;
+  final String nomAlmacen;
   final String resultado;
 
   Ubicacion({
@@ -10,6 +11,7 @@ class Ubicacion {
     required this.codUbicacion,
     required this.codAlmacen,
     required this.nomUbicacion,
+    required this.nomAlmacen,
     required this.resultado,
   });
 }

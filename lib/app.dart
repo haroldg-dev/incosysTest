@@ -22,10 +22,8 @@ final appRouter = GoRouter(
     GoRoute(path: '/', builder: (context, state) => const HomePage(), routes: [
       GoRoute(
         parentNavigatorKey: _rootNavigator,
-        path: 'inventario/:nomAlmacen',
-        name: 'inventario',
-        builder: (context, state) =>
-            InventoryPage(nomAlmacen: state.pathParameters['nomAlmacen']),
+        path: 'inventario',
+        builder: (context, state) => InventoryPage(),
       ),
     ]),
     /* ShellRoute(

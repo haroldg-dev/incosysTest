@@ -38,7 +38,7 @@ class HomePageState extends ConsumerState<HomePage> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("lib/src/asset/images/fondopag2.jpg"),
+            image: AssetImage("lib/src/asset/images/fondopag3.jpg"),
             fit: BoxFit.cover,
           ),
         ),
@@ -185,8 +185,8 @@ class HomePageState extends ConsumerState<HomePage> {
                             conteoController.text != '') {
                           ref
                               .read(ubicacionProvider.notifier)
-                              .getUbicacion(
-                                  codAlmacen, ubicacionController.text)
+                              .getUbicacion(codAlmacen,
+                                  ubicacionController.text, nomAlmacen)
                               .then((value) => ());
                           if (ref.watch(ubicacionProvider).resultado != 'OK') {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -194,8 +194,7 @@ class HomePageState extends ConsumerState<HomePage> {
                                   Text(ref.watch(ubicacionProvider).resultado),
                             ));
                           } else {
-                            context.goNamed('inventario',
-                                pathParameters: {'nomAlmacen': nomAlmacen});
+                            context.go('/inventario');
                           }
                         } else {
                           ScaffoldMessenger.of(context)

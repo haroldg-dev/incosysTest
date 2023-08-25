@@ -5,15 +5,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:incosys/src/apis/ubicacion/entities/ubicacion.entity.dart';
+import 'package:incosys/src/home/providers/ubicacion.provider.dart';
 import 'package:incosys/src/inventory/pages/scanner.page.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:incosys/src/shared/widgets/textfield_v1.dart';
 
 class InventoryPage extends ConsumerStatefulWidget {
   static const String name = 'inventory_page';
-  String? nomAlmacen;
 
-  InventoryPage({super.key, String? nomAlmacen});
+  const InventoryPage({super.key});
 
   @override
   InventoryPageState createState() => InventoryPageState();
@@ -22,12 +23,13 @@ class InventoryPage extends ConsumerStatefulWidget {
 class InventoryPageState extends ConsumerState<InventoryPage> {
   List<XFile>? fotoArticulos;
   XFile? etiqueta;
-
+  late Ubicacion ubiSelected;
   final ImagePicker imgpicker = ImagePicker();
 
   @override
   void initState() {
     super.initState();
+    ubiSelected = ref.read(ubicacionProvider);
   }
 
   Future getImage(ImageSource media) async {
@@ -108,179 +110,150 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: PageView(
-        children: [
-          SafeArea(
-              child: SingleChildScrollView(
-                  child: Column(
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              AlmacenInventory(nomAlmacen: widget.nomAlmacen),
-              const SizedBox(
-                height: 5,
-              ),
-              const UbicacionInventory(),
-              //Codigo
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Flexible(
-                      child: VersionOneTextField(
-                        controller: codigoController,
-                        name: "Codigo",
-                        type: TextInputType.text,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("lib/src/asset/images/fondopag2.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: PageView(
+          children: [
+            SafeArea(
+                child: SingleChildScrollView(
+                    child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                AlmacenInventory(nomAlmacen: ubiSelected.nomAlmacen),
+                const SizedBox(
+                  height: 5,
+                ),
+                UbicacionInventory(nomUbicacion: ubiSelected.nomUbicacion),
+                //Codigo
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Flexible(
+                        child: VersionOneTextField(
+                          controller: codigoController,
+                          name: "Codigo",
+                          type: TextInputType.text,
+                        ),
                       ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.qr_code_scanner),
-                      onPressed: () => showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) => Dialog.fullscreen(
-                            child: ScannerPage(controller: codigoController)),
+                      IconButton(
+                        color: Colors.white,
+                        icon: const Icon(Icons.qr_code_scanner),
+                        onPressed: () => showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => Dialog.fullscreen(
+                              child: ScannerPage(controller: codigoController)),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              //Codigo
-              //Descripcion
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                child: VersionOneTextField(
-                  controller: descripcionController,
-                  name: "Descripcion",
-                  type: TextInputType.multiline,
-                ),
-              ),
-              //Descripcion
-              //Cantidad
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                child: TextField(
-                  controller: cantidadController,
-                  decoration: const InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 0, color: Color.fromRGBO(255, 255, 255, 1)),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 2, color: Color(0xFFDADADA)),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    filled: true,
-                    fillColor: Color(0xFFF2F2F2),
-                    hintText: 'Cantidad',
+                    ],
                   ),
-                  keyboardType: TextInputType.multiline,
                 ),
-              ),
-              //Cantidad
-              //Observacion
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                child: TextField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          width: 0, color: Color.fromRGBO(255, 255, 255, 1)),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 2, color: Color(0xFFDADADA)),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                    ),
-                    filled: true,
-                    fillColor: Color(0xFFF2F2F2),
-                    hintText: 'Observación',
+                //Codigo
+                //Descripcion
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  child: VersionOneTextField(
+                    controller: descripcionController,
+                    name: "Descripcion",
+                    type: TextInputType.multiline,
                   ),
-                  keyboardType: TextInputType.multiline,
-                  minLines: 2,
-                  maxLines: 4,
                 ),
-              ),
-              //Observacion
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  //Foto Etiqueta
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 10),
-                    child: SizedBox(
-                      width: 130,
-                      height: 130,
-                      child: etiqueta != null
-                          ? Column(children: [
-                              const Text(
-                                "Etiqueta",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w700,
-                                    color: Color.fromARGB(255, 0, 0, 0)),
-                              ),
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.file(
-                                  //to show image, you type like this.
-                                  File(etiqueta!.path),
-                                  fit: BoxFit.cover,
-                                ),
-                              )
-                            ])
-                          : OutlinedButton(
-                              onPressed: () {
-                                myAlert();
-                              },
-                              style: OutlinedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  foregroundColor:
-                                      const Color.fromARGB(255, 0, 0, 0)),
-                              child: const Text(
-                                'Etiqueta',
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontFamily: 'Roboto',
-                                    fontWeight: FontWeight.w700,
-                                    color: Color.fromARGB(255, 0, 0, 0)),
-                              ),
-                            ),
+                //Descripcion
+                //Cantidad
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  child: VersionOneTextField(
+                    controller: cantidadController,
+                    name: "Cantidad",
+                    type: TextInputType.number,
+                  ),
+                ),
+
+                //Cantidad
+                //Observacion
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Colors.black38,
+                              blurRadius: 3.0,
+                              spreadRadius: 0.6)
+                        ]),
+                    child: const TextField(
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 0, color: Color.fromRGBO(26, 47, 76, 1)),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 2, color: Colors.white60),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        ),
+                        filled: true,
+                        fillColor: Color.fromRGBO(26, 47, 76, 1),
+                        hintText: "Observación",
+                        hintStyle: TextStyle(color: Colors.white70),
+                      ),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal),
+                      keyboardType: TextInputType.multiline,
+                      minLines: 2,
+                      maxLines: 4,
                     ),
                   ),
-                  //Foto Etiqueta
-                  //Fotos Articulo
-                  Padding(
+                ),
+                //Observacion
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    //Foto Etiqueta
+                    Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 10),
                       child: SizedBox(
                         width: 130,
                         height: 130,
-                        child: fotoArticulos != null
-                            ? Wrap(
-                                children: fotoArticulos!.map((articulo) {
-                                  return Card(
-                                    child: Image.file(
-                                      File(articulo.path),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  );
-                                }).toList(),
-                              )
+                        child: etiqueta != null
+                            ? Column(children: [
+                                const Text(
+                                  "Etiqueta",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w700,
+                                      color: Color.fromARGB(255, 0, 0, 0)),
+                                ),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.file(
+                                    //to show image, you type like this.
+                                    File(etiqueta!.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              ])
                             : OutlinedButton(
                                 onPressed: () {
-                                  openImages();
+                                  myAlert();
                                 },
                                 style: OutlinedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
@@ -289,69 +262,130 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                     foregroundColor:
                                         const Color.fromARGB(255, 0, 0, 0)),
                                 child: const Text(
-                                  'Articulos',
+                                  'Etiqueta',
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontFamily: 'Roboto',
                                       fontWeight: FontWeight.w700,
-                                      color: Color.fromARGB(255, 0, 0, 0)),
+                                      color: Colors.white),
                                 ),
                               ),
-                      )),
-                  //Fotos Articulo
-                ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              //Buttons
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 70),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: FilledButton(
-                        style: FilledButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 0, 0, 0)),
-                        onPressed: () {
-                          context.go('/');
-                        },
-                        child: const Text(
-                          'Salir',
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w700,
-                              color: Color.fromARGB(255, 255, 255, 255)),
-                        ),
                       ),
                     ),
-                    Expanded(
-                      child: FilledButton(
-                        style: FilledButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 0, 0, 0)),
-                        onPressed: () {
-                          context.go('/');
-                        },
-                        child: const Text(
-                          'Grabar',
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w700,
-                              color: Color.fromARGB(255, 255, 255, 255)),
-                        ),
-                      ),
-                    ),
+                    //Foto Etiqueta
+                    //Fotos Articulo
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10),
+                        child: SizedBox(
+                          width: 130,
+                          height: 130,
+                          child: fotoArticulos != null
+                              ? Wrap(
+                                  children: fotoArticulos!.map((articulo) {
+                                    return Card(
+                                      child: Image.file(
+                                        File(articulo.path),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    );
+                                  }).toList(),
+                                )
+                              : OutlinedButton(
+                                  onPressed: () {
+                                    openImages();
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      foregroundColor:
+                                          const Color.fromARGB(255, 0, 0, 0)),
+                                  child: const Text(
+                                    'Articulos',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'Roboto',
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                        )),
+                    //Fotos Articulo
                   ],
                 ),
-              ),
-            ],
-          )))
-        ],
+                const SizedBox(
+                  height: 5,
+                ),
+                //Buttons
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10),
+                        child: SizedBox(
+                          width: 130,
+                          height: 40,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                )),
+                            onPressed: () {
+                              context.go('/');
+                            },
+                            child: const Text(
+                              'Salir',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'Roboto',
+                                  fontWeight: FontWeight.w900,
+                                  color: Color.fromRGBO(19, 39, 66, 1)),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10),
+                        child: SizedBox(
+                          width: 130,
+                          height: 40,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    const Color.fromRGBO(255, 180, 184, 1),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                )),
+                            onPressed: () {
+                              context.go('/');
+                            },
+                            child: const Text(
+                              'Grabar',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'Roboto',
+                                  fontWeight: FontWeight.w900,
+                                  color: Color.fromRGBO(19, 39, 66, 1)),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )))
+          ],
+        ),
       ),
     );
   }
@@ -370,6 +404,7 @@ class AlmacenInventory extends StatelessWidget {
         fontFamily: 'Roboto',
         fontSize: 20,
         fontWeight: FontWeight.w900,
+        color: Colors.white,
       ),
     );
   }
@@ -377,18 +412,18 @@ class AlmacenInventory extends StatelessWidget {
 
 //Ubicacion NAME
 class UbicacionInventory extends StatelessWidget {
-  const UbicacionInventory({
-    super.key,
-  });
+  String? nomUbicacion;
+  UbicacionInventory({super.key, this.nomUbicacion});
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'UbicacionInventory Name',
-      style: TextStyle(
+    return Text(
+      nomUbicacion!,
+      style: const TextStyle(
         fontFamily: 'Roboto',
         fontSize: 20,
         fontWeight: FontWeight.w900,
+        color: Colors.white,
       ),
     );
   }
