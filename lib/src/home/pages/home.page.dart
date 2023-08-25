@@ -52,47 +52,71 @@ class HomePageState extends ConsumerState<HomePage> {
                 ),
                 //Almacen
                 Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 40),
-                    child: ButtonTheme(
-                        alignedDropdown: true,
-                        child: DropdownButtonFormField<String>(
-                            isExpanded: true,
-                            icon: const Icon(Icons.keyboard_arrow_down),
-                            hint: const Text(
-                              "Seleccione almacen",
-                              style: TextStyle(color: Colors.white54),
-                            ),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: const Color.fromRGBO(26, 47, 76, 1),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(6),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black38,
+                                blurRadius: 3.0,
+                                spreadRadius: 0.6)
+                          ]),
+                      child: ButtonTheme(
+                          alignedDropdown: true,
+                          child: DropdownButtonFormField<String>(
+                              dropdownColor:
+                                  const Color.fromRGBO(26, 47, 76, 1),
+                              isExpanded: true,
+                              icon: const Icon(Icons.keyboard_arrow_down),
+                              hint: const Text(
+                                "Seleccione almacen",
+                                style: TextStyle(color: Colors.white70),
                               ),
-                            ),
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.normal),
-                            //value: codAlmacen != '' ? codAlmacen : null,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                List<String> aux = newValue!.split('/');
-                                codAlmacen = aux[0];
-                                nomAlmacen = aux[1];
-                                //codAlmacen = newValue!;
-                              });
-                            },
-                            items: ref
-                                .watch(almacenProvider)
-                                .map((op) => DropdownMenuItem(
-                                      value:
-                                          '${op.codAlmacen}/${op.nomAlmacen}',
-                                      child: Text(
-                                        op.nomAlmacen,
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                    ))
-                                .toList()))),
+                              decoration: const InputDecoration(
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      width: 0,
+                                      color: Color.fromRGBO(26, 47, 76, 1)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                ),
+                                filled: true,
+                                fillColor: Color.fromRGBO(26, 47, 76, 1),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      width: 2, color: Colors.white60),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                ),
+                              ),
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal),
+                              //value: codAlmacen != '' ? codAlmacen : null,
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  List<String> aux = newValue!.split('/');
+                                  codAlmacen = aux[0];
+                                  nomAlmacen = aux[1];
+                                  //codAlmacen = newValue!;
+                                });
+                              },
+                              items: ref
+                                  .watch(almacenProvider)
+                                  .map((op) => DropdownMenuItem(
+                                        value:
+                                            '${op.codAlmacen}/${op.nomAlmacen}',
+                                        child: Text(
+                                          op.nomAlmacen,
+                                          style: const TextStyle(
+                                              color: Colors.white),
+                                        ),
+                                      ))
+                                  .toList()))),
+                ),
                 const SizedBox(
                   height: 30,
                 ),

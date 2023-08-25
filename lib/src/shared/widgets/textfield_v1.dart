@@ -43,10 +43,10 @@ class VersionOneTextFieldState extends ConsumerState<VersionOneTextField> {
           filled: true,
           fillColor: const Color.fromRGBO(26, 47, 76, 1),
           hintText: widget.name,
-          hintStyle: const TextStyle(color: Colors.white54),
+          hintStyle: const TextStyle(color: Colors.white70),
         ),
-        style:
-            const TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
+        style: const TextStyle(
+            color: Colors.white, fontSize: 14, fontWeight: FontWeight.normal),
         keyboardType: widget.type,
       ),
     );
