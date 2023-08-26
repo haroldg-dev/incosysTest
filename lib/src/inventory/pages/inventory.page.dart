@@ -124,12 +124,10 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                     child: Column(
               children: [
                 const SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 AlmacenInventory(nomAlmacen: ubiSelected.nomAlmacen),
-                const SizedBox(
-                  height: 5,
-                ),
+
                 UbicacionInventory(nomUbicacion: ubiSelected.nomUbicacion),
                 //Codigo
                 Padding(
@@ -179,7 +177,6 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                     type: TextInputType.number,
                   ),
                 ),
-
                 //Cantidad
                 //Observacion
                 Padding(
@@ -233,41 +230,72 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                         width: 130,
                         height: 130,
                         child: etiqueta != null
-                            ? Column(children: [
-                                const Text(
-                                  "Etiqueta",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.w700,
-                                      color: Color.fromARGB(255, 0, 0, 0)),
-                                ),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.file(
-                                    //to show image, you type like this.
-                                    File(etiqueta!.path),
-                                    fit: BoxFit.cover,
-                                  ),
-                                )
-                              ])
-                            : OutlinedButton(
-                                onPressed: () {
-                                  myAlert();
-                                },
-                                style: OutlinedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
+                            ? Stack(fit: StackFit.expand, children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10.0),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                            color: Colors.white70,
+                                            blurRadius: 5.0,
+                                            spreadRadius: 0.9)
+                                      ]),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Image.file(
+                                      //to show image, you type like this.
+                                      File(etiqueta!.path),
+                                      fit: BoxFit.cover,
                                     ),
-                                    foregroundColor:
-                                        const Color.fromARGB(255, 0, 0, 0)),
-                                child: const Text(
-                                  'Etiqueta',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white),
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          const Color.fromRGBO(26, 47, 76, 0.1),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      )),
+                                  onPressed: () {
+                                    myAlert();
+                                  },
+                                  child: const Text(
+                                    'Etiqueta',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ])
+                            : Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                          color: Colors.white70,
+                                          blurRadius: 5.0,
+                                          spreadRadius: 0.9)
+                                    ]),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor:
+                                          const Color.fromRGBO(26, 47, 76, 1),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      )),
+                                  onPressed: () {
+                                    myAlert();
+                                  },
+                                  child: const Text(
+                                    'Etiqueta',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white),
+                                  ),
                                 ),
                               ),
                       ),
@@ -281,34 +309,91 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                           width: 130,
                           height: 130,
                           child: fotoArticulos != null
-                              ? Wrap(
-                                  children: fotoArticulos!.map((articulo) {
-                                    return Card(
-                                      child: Image.file(
-                                        File(articulo.path),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    );
-                                  }).toList(),
-                                )
-                              : OutlinedButton(
-                                  onPressed: () {
-                                    openImages();
-                                  },
-                                  style: OutlinedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
+                              ? Stack(fit: StackFit.expand, children: <Widget>[
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        color: const Color.fromRGBO(
+                                            26, 47, 76, 0.7),
                                         borderRadius:
                                             BorderRadius.circular(10.0),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                              color: Colors.white70,
+                                              blurRadius: 5.0,
+                                              spreadRadius: 0.9)
+                                        ]),
+                                    child: Wrap(
+                                      spacing: 5,
+                                      runSpacing: 5,
+                                      alignment: WrapAlignment.center,
+                                      runAlignment: WrapAlignment.center,
+                                      children: fotoArticulos!.map((articulo) {
+                                        return SizedBox(
+                                          width: 60,
+                                          height: 60,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            child: Image.file(
+                                              //to show image, you type like this.
+                                              File(articulo.path),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: const Color.fromRGBO(
+                                            26, 47, 76, 0.1),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        )),
+                                    onPressed: () {
+                                      openImages();
+                                    },
+                                    child: const Text(
+                                      'Articulos',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
                                       ),
-                                      foregroundColor:
-                                          const Color.fromARGB(255, 0, 0, 0)),
-                                  child: const Text(
-                                    'Articulos',
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: 'Roboto',
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ])
+                              : Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                            color: Colors.white70,
+                                            blurRadius: 5.0,
+                                            spreadRadius: 0.9)
+                                      ]),
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            const Color.fromRGBO(26, 47, 76, 1),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        )),
+                                    onPressed: () {
+                                      openImages();
+                                    },
+                                    child: const Text(
+                                      'Articulos',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -398,13 +483,19 @@ class AlmacenInventory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      nomAlmacen!,
-      style: const TextStyle(
-        fontFamily: 'Roboto',
-        fontSize: 20,
-        fontWeight: FontWeight.w900,
-        color: Colors.white,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          nomAlmacen!,
+          style: const TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 20,
+            fontWeight: FontWeight.w900,
+            color: Colors.white,
+          ),
+        ),
       ),
     );
   }
@@ -417,14 +508,19 @@ class UbicacionInventory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      nomUbicacion!,
-      style: const TextStyle(
-        fontFamily: 'Roboto',
-        fontSize: 20,
-        fontWeight: FontWeight.w900,
-        color: Colors.white,
-      ),
-    );
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 50),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Ubicacion ${nomUbicacion!}",
+            style: const TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 20,
+              fontWeight: FontWeight.w900,
+              color: Colors.white,
+            ),
+          ),
+        ));
   }
 }

@@ -161,7 +161,10 @@ class LoginFormState extends ConsumerState<LoginForm> {
                       ruc: ruc.text, uid: user.text, pwd: password.text);
                   if (ref.watch(seguridadUserProvider).log != 'OK') {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(ref.watch(seguridadUserProvider).log),
+                      content: Text(
+                        ref.watch(seguridadUserProvider).log,
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ));
                   } else {
                     context.go('/');

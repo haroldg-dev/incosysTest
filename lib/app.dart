@@ -23,7 +23,7 @@ final appRouter = GoRouter(
       GoRoute(
         parentNavigatorKey: _rootNavigator,
         path: 'inventario',
-        builder: (context, state) => InventoryPage(),
+        builder: (context, state) => const InventoryPage(),
       ),
     ]),
     /* ShellRoute(
