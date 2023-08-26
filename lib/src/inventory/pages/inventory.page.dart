@@ -9,6 +9,7 @@ import 'package:incosys/src/apis/ubicacion/entities/ubicacion.entity.dart';
 import 'package:incosys/src/home/providers/ubicacion.provider.dart';
 import 'package:incosys/src/inventory/pages/scanner.page.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:incosys/src/inventory/providers/inventario.provider.dart';
 import 'package:incosys/src/shared/widgets/textfield_v1.dart';
 
 class InventoryPage extends ConsumerStatefulWidget {
@@ -88,7 +89,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
   openImages() async {
     try {
       var pickedfiles = await imgpicker.pickMultiImage();
-      //you can use ImageCourse.camera for Camera capture
+      // ignore: unnecessary_null_comparison
       if (pickedfiles != null) {
         fotoArticulos = pickedfiles;
         setState(() {});
@@ -451,7 +452,45 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                   borderRadius: BorderRadius.circular(10),
                                 )),
                             onPressed: () {
-                              context.go('/');
+                              if (codigoController.text != '' &&
+                                  descripcionController.text != '' &&
+                                  cantidadController.text != '') {
+                                ref
+                                    .read(inventarioProvider.notifier)
+                                    .setInventario(
+                                        codAlmacen:
+                                            ubiSelected.codAlmacen.toString(),
+                                        codUbicacion:
+                                            ubiSelected.codUbicacion.toString(),
+                                        codArticulo: codigoController.text,
+                                        nomArticulo: descripcionController.text,
+                                        cantidad: cantidadController.text,
+                                        afterSetData: () {
+                                          if (ref
+                                                  .watch(ubicacionProvider)
+                                                  .resultado !=
+                                              'OK') {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(SnackBar(
+                                              content: Text(ref
+                                                  .watch(ubicacionProvider)
+                                                  .resultado),
+                                            ));
+                                          } else {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(const SnackBar(
+                                              content:
+                                                  Text("Grabación Exitosa"),
+                                            ));
+                                          }
+                                        });
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text(
+                                      "Ventana  los campos son obligatorios"),
+                                ));
+                              }
                             },
                             child: const Text(
                               'Grabar',
