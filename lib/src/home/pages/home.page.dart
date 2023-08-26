@@ -183,19 +183,22 @@ class HomePageState extends ConsumerState<HomePage> {
                         if (codAlmacen != '' &&
                             ubicacionController.text != '' &&
                             conteoController.text != '') {
-                          ref
-                              .read(ubicacionProvider.notifier)
-                              .getUbicacion(codAlmacen,
-                                  ubicacionController.text, nomAlmacen)
-                              .then((value) => ());
-                          if (ref.watch(ubicacionProvider).resultado != 'OK') {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content:
-                                  Text(ref.watch(ubicacionProvider).resultado),
-                            ));
-                          } else {
-                            context.go('/inventario');
-                          }
+                          ref.read(ubicacionProvider.notifier).getUbicacion(
+                              codAlmacen: codAlmacen,
+                              nomUbicacion: ubicacionController.text,
+                              nomAlmacen: nomAlmacen,
+                              afterGetData: () {
+                                if (ref.watch(ubicacionProvider).resultado !=
+                                    'OK') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text(
+                                        ref.watch(ubicacionProvider).resultado),
+                                  ));
+                                } else {
+                                  context.go('/inventario');
+                                }
+                              });
                         } else {
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(

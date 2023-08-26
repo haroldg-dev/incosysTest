@@ -18,7 +18,10 @@ class SeguridadUserNotifier extends StateNotifier<SeguridadUser> {
             ruc: ''));
 
   Future<void> postLogin(
-      {String ruc = '', String uid = '', String pwd = ''}) async {
+      {String ruc = '',
+      String uid = '',
+      String pwd = '',
+      required Function afterLogged}) async {
     final SeguridadUser seguridadUser = await _seguridadUserController.login(
       ruc: ruc,
       uid: uid,
@@ -26,6 +29,7 @@ class SeguridadUserNotifier extends StateNotifier<SeguridadUser> {
     );
 
     state = seguridadUser;
+    afterLogged();
   }
 
   Future<void> logout() async {}

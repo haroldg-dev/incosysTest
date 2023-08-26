@@ -158,17 +158,21 @@ class LoginFormState extends ConsumerState<LoginForm> {
               onPressed: () {
                 if (ruc.text != '' && user.text != '' && password.text != '') {
                   ref.read(seguridadUserProvider.notifier).postLogin(
-                      ruc: ruc.text, uid: user.text, pwd: password.text);
-                  if (ref.watch(seguridadUserProvider).log != 'OK') {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                        ref.watch(seguridadUserProvider).log,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ));
-                  } else {
-                    context.go('/');
-                  }
+                      ruc: ruc.text,
+                      uid: user.text,
+                      pwd: password.text,
+                      afterLogged: () {
+                        if (ref.watch(seguridadUserProvider).log != 'OK') {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                              ref.watch(seguridadUserProvider).log,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ));
+                        } else {
+                          context.go('/');
+                        }
+                      });
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("Todos los campos son obligatorios"),
