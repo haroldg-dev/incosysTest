@@ -32,6 +32,7 @@ class InventarioNotifier extends StateNotifier<Inventario> {
       String nomArticulo = '',
       String cantidad = '',
       String etiqueta = '',
+      String observacion = '',
       required List<String> imagenes,
       required Function afterSetData}) async {
     final bytes = Io.File(etiqueta).readAsBytesSync();
@@ -56,6 +57,7 @@ class InventarioNotifier extends StateNotifier<Inventario> {
       codArticulo: codArticulo,
       nomArticulo: nomArticulo,
       cantidad: cantidad,
+      observacion: observacion,
       etiqueta: etiqueta64,
       imagenes: imagenes64,
     );

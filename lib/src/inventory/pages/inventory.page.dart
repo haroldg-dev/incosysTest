@@ -433,6 +433,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                         codArticulo: codigoController.text,
                                         nomArticulo: descripcionController.text,
                                         cantidad: cantidadController.text,
+                                        observacion: observacionController.text,
                                         etiqueta: etiqueta,
                                         imagenes: fotoArticulos,
                                         afterSetData: () {

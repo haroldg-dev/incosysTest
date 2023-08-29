@@ -18,6 +18,7 @@ class InvenvarioController {
     String codArticulo = '',
     String nomArticulo = '',
     String cantidad = '',
+    String observacion = '',
     String etiqueta = '',
     required List<Object> imagenes,
   }) async {
@@ -32,6 +33,7 @@ class InvenvarioController {
       "cod_articulo": codArticulo,
       "nom_articulo": nomArticulo,
       "cantidad": cantidad,
+      "observacion": observacion,
       "etiqueta": etiqueta,
       "imagenes": imagenes,
     };
