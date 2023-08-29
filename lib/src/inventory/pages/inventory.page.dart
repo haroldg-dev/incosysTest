@@ -1,7 +1,4 @@
-// ignore_for_file: must_be_immutable
-
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -22,95 +19,48 @@ class InventoryPage extends ConsumerStatefulWidget {
 }
 
 class InventoryPageState extends ConsumerState<InventoryPage> {
-  List<XFile>? fotoArticulos;
-  XFile? etiqueta;
+  List<String> fotoArticulos = [];
+  String etiqueta = '';
   late Ubicacion ubiSelected;
   final ImagePicker imgpicker = ImagePicker();
-
+  final codigoController = TextEditingController();
+  final descripcionController = TextEditingController();
+  final cantidadController = TextEditingController();
+  final observacionController = TextEditingController();
   @override
   void initState() {
     super.initState();
     ubiSelected = ref.read(ubicacionProvider);
   }
 
-  Future getImage(ImageSource media) async {
-    var img = await imgpicker.pickImage(source: media);
-
-    setState(() {
-      etiqueta = img;
-    });
+  Future getImage(
+    ImageSource media,
+  ) async {
+    var img = await imgpicker.pickImage(
+        source: media, imageQuality: 50, maxHeight: 720);
+    etiqueta = img!.path;
+    setState(() {});
   }
 
-  void myAlert() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            title: const Text('Please choose media to select'),
-            content: SizedBox(
-              height: MediaQuery.of(context).size.height / 6,
-              child: Column(
-                children: [
-                  ElevatedButton(
-                    //if user click this button, user can upload image from gallery
-                    onPressed: () {
-                      Navigator.pop(context);
-                      getImage(ImageSource.gallery);
-                    },
-                    child: const Row(
-                      children: [
-                        Icon(Icons.image),
-                        Text('From Gallery'),
-                      ],
-                    ),
-                  ),
-                  ElevatedButton(
-                    //if user click this button. user can upload image from camera
-                    onPressed: () {
-                      Navigator.pop(context);
-                      getImage(ImageSource.camera);
-                    },
-                    child: const Row(
-                      children: [
-                        Icon(Icons.camera),
-                        Text('From Camera'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
-  openImages() async {
-    try {
-      var pickedfiles = await imgpicker.pickMultiImage();
-      // ignore: unnecessary_null_comparison
-      if (pickedfiles != null) {
-        fotoArticulos = pickedfiles;
-        setState(() {});
-      } else {
-        print("No image is selected.");
-      }
-    } catch (e) {
-      print("error while picking file.");
+  Future getListImages(ImageSource media) async {
+    if (fotoArticulos.length < 4) {
+      var img = await imgpicker.pickImage(
+          source: media, imageQuality: 50, maxHeight: 720);
+      fotoArticulos.add(img!.path);
+      setState(() {});
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Fotos de Articulos full"),
+      ));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final codigoController = TextEditingController();
-    final descripcionController = TextEditingController();
-    final cantidadController = TextEditingController();
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromRGBO(26, 47, 76, 1),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -142,6 +92,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                           controller: codigoController,
                           name: "Codigo",
                           type: TextInputType.text,
+                          onChanged: null,
                         ),
                       ),
                       IconButton(
@@ -165,6 +116,12 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                     controller: descripcionController,
                     name: "Descripcion",
                     type: TextInputType.multiline,
+                    onChanged: (value) {
+                      descripcionController.value = TextEditingValue(
+                        text: value.toUpperCase(),
+                        selection: descripcionController.selection,
+                      );
+                    },
                   ),
                 ),
                 //Descripcion
@@ -176,6 +133,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                     controller: cantidadController,
                     name: "Cantidad",
                     type: TextInputType.number,
+                    onChanged: null,
                   ),
                 ),
                 //Cantidad
@@ -192,8 +150,9 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                               blurRadius: 3.0,
                               spreadRadius: 0.6)
                         ]),
-                    child: const TextField(
-                      decoration: InputDecoration(
+                    child: TextField(
+                      controller: observacionController,
+                      decoration: const InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                               width: 0, color: Color.fromRGBO(26, 47, 76, 1)),
@@ -209,28 +168,35 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                         hintText: "Observación",
                         hintStyle: TextStyle(color: Colors.white70),
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,
                           fontWeight: FontWeight.normal),
                       keyboardType: TextInputType.multiline,
                       minLines: 2,
                       maxLines: 4,
+                      onChanged: (value) {
+                        observacionController.value = TextEditingValue(
+                          text: value.toUpperCase(),
+                          selection: observacionController.selection,
+                        );
+                      },
                     ),
                   ),
                 ),
                 //Observacion
+                //Fotos
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     //Foto Etiqueta
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 10),
+                          vertical: 10, horizontal: 15),
                       child: SizedBox(
                         width: 130,
                         height: 130,
-                        child: etiqueta != null
+                        child: etiqueta != ''
                             ? Stack(fit: StackFit.expand, children: <Widget>[
                                 Container(
                                   decoration: BoxDecoration(
@@ -245,7 +211,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                     borderRadius: BorderRadius.circular(8),
                                     child: Image.file(
                                       //to show image, you type like this.
-                                      File(etiqueta!.path),
+                                      File(etiqueta),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -258,7 +224,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                         borderRadius: BorderRadius.circular(10),
                                       )),
                                   onPressed: () {
-                                    myAlert();
+                                    getImage(ImageSource.camera);
                                   },
                                   child: const Text(
                                     'Etiqueta',
@@ -287,7 +253,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                         borderRadius: BorderRadius.circular(10),
                                       )),
                                   onPressed: () {
-                                    myAlert();
+                                    getImage(ImageSource.camera);
                                   },
                                   child: const Text(
                                     'Etiqueta',
@@ -305,11 +271,11 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                     //Fotos Articulo
                     Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
+                            vertical: 10, horizontal: 15),
                         child: SizedBox(
                           width: 130,
                           height: 130,
-                          child: fotoArticulos != null
+                          child: fotoArticulos.isNotEmpty
                               ? Stack(fit: StackFit.expand, children: <Widget>[
                                   Container(
                                     decoration: BoxDecoration(
@@ -328,7 +294,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                       runSpacing: 5,
                                       alignment: WrapAlignment.center,
                                       runAlignment: WrapAlignment.center,
-                                      children: fotoArticulos!.map((articulo) {
+                                      children: fotoArticulos.map((articulo) {
                                         return SizedBox(
                                           width: 60,
                                           height: 60,
@@ -337,7 +303,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                                 BorderRadius.circular(8),
                                             child: Image.file(
                                               //to show image, you type like this.
-                                              File(articulo.path),
+                                              File(articulo),
                                               fit: BoxFit.cover,
                                             ),
                                           ),
@@ -354,7 +320,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                               BorderRadius.circular(10),
                                         )),
                                     onPressed: () {
-                                      openImages();
+                                      getListImages(ImageSource.camera);
                                     },
                                     child: const Text(
                                       'Articulos',
@@ -385,7 +351,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                               BorderRadius.circular(10),
                                         )),
                                     onPressed: () {
-                                      openImages();
+                                      getListImages(ImageSource.camera);
                                     },
                                     child: const Text(
                                       'Articulos',
@@ -402,19 +368,20 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                     //Fotos Articulo
                   ],
                 ),
+                //Fotos
                 const SizedBox(
                   height: 5,
                 ),
                 //Buttons
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
+                            vertical: 10, horizontal: 15),
                         child: SizedBox(
                           width: 130,
                           height: 40,
@@ -440,7 +407,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
+                            vertical: 10, horizontal: 15),
                         child: SizedBox(
                           width: 130,
                           height: 40,
@@ -454,7 +421,8 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                             onPressed: () {
                               if (codigoController.text != '' &&
                                   descripcionController.text != '' &&
-                                  cantidadController.text != '') {
+                                  cantidadController.text != '' &&
+                                  etiqueta != '') {
                                 ref
                                     .read(inventarioProvider.notifier)
                                     .setInventario(
@@ -465,6 +433,8 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                         codArticulo: codigoController.text,
                                         nomArticulo: descripcionController.text,
                                         cantidad: cantidadController.text,
+                                        etiqueta: etiqueta,
+                                        imagenes: fotoArticulos,
                                         afterSetData: () {
                                           if (ref
                                                   .watch(ubicacionProvider)
@@ -482,6 +452,14 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                               content:
                                                   Text("Grabación Exitosa"),
                                             ));
+                                            setState(() {
+                                              codigoController.text = '';
+                                              descripcionController.text = '';
+                                              cantidadController.text = '';
+                                              observacionController.text = '';
+                                              etiqueta = '';
+                                              fotoArticulos = [];
+                                            });
                                           }
                                         });
                               } else {

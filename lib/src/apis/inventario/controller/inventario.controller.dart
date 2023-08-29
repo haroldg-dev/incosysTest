@@ -18,6 +18,8 @@ class InvenvarioController {
     String codArticulo = '',
     String nomArticulo = '',
     String cantidad = '',
+    String etiqueta = '',
+    required List<Object> imagenes,
   }) async {
     final authenticatedUser = {
       "ruc": ruc,
@@ -30,6 +32,8 @@ class InvenvarioController {
       "cod_articulo": codArticulo,
       "nom_articulo": nomArticulo,
       "cantidad": cantidad,
+      "etiqueta": etiqueta,
+      "imagenes": imagenes,
     };
 
     final response =

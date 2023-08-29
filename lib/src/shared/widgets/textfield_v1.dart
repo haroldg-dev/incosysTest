@@ -5,12 +5,13 @@ class VersionOneTextField extends ConsumerStatefulWidget {
   final TextEditingController controller;
   final TextInputType type;
   final String name;
-
+  final Function(String)? onChanged;
   const VersionOneTextField(
       {super.key,
       required this.controller,
       required this.name,
-      required this.type});
+      required this.type,
+      required this.onChanged});
 
   @override
   VersionOneTextFieldState createState() => VersionOneTextFieldState();
@@ -48,6 +49,7 @@ class VersionOneTextFieldState extends ConsumerState<VersionOneTextField> {
         style: const TextStyle(
             color: Colors.white, fontSize: 14, fontWeight: FontWeight.normal),
         keyboardType: widget.type,
+        onChanged: widget.onChanged,
       ),
     );
   }

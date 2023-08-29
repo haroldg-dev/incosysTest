@@ -34,7 +34,7 @@ class HomePageState extends ConsumerState<HomePage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromRGBO(26, 47, 76, 1),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -132,6 +132,7 @@ class HomePageState extends ConsumerState<HomePage> {
                           controller: ubicacionController,
                           name: "Ubicacion",
                           type: TextInputType.text,
+                          onChanged: null,
                         ),
                       ),
                       IconButton(
@@ -159,6 +160,7 @@ class HomePageState extends ConsumerState<HomePage> {
                     controller: conteoController,
                     name: "Conteo",
                     type: TextInputType.number,
+                    onChanged: null,
                   ),
                 ),
                 //Conteo
