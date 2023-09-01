@@ -2,8 +2,8 @@ import 'package:incosys/src/apis/ubicacion/entities/ubicacion.entity.dart';
 import 'package:incosys/src/apis/ubicacion/model/ubicacion.data.model.dart';
 
 class UbicacionMapper {
-  static Ubicacion dataToEntity(
-          UbicacionData apiUbicacion, String resultado, String nomAlmacen) =>
+  static Ubicacion dataToEntity(UbicacionData apiUbicacion, String resultado,
+          String nomAlmacen, String conteo) =>
       Ubicacion(
         activo: apiUbicacion.activo,
         codUbicacion: apiUbicacion.codUbicacion,
@@ -11,5 +11,6 @@ class UbicacionMapper {
         nomUbicacion: apiUbicacion.nomUbicacion,
         nomAlmacen: nomAlmacen,
         resultado: resultado,
+        conteo: conteo,
       );
 }

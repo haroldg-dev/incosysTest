@@ -38,45 +38,19 @@ class NavbarDrawer extends StatelessWidget {
                           (states) => const Color.fromRGBO(255, 0, 0, 0.183))),
                   onPressed: () {
                     Navigator.pop(context);
-                    context.go('/home');
+                    context.go('/');
                   },
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     child: const Row(
                       children: [
                         Icon(
-                          EPartnerIcons.tool,
+                          EPartnerIcons.home,
                           color: Colors.black,
                         ),
                         SizedBox(width: 13),
                         Expanded(
-                          child: Text("Ajustes Generales",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.normal)),
-                        )
-                      ],
-                    ),
-                  )),
-              TextButton(
-                  style: ButtonStyle(
-                      overlayColor: MaterialStateColor.resolveWith(
-                          (states) => const Color.fromRGBO(255, 0, 0, 0.183))),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    child: const Row(
-                      children: [
-                        Icon(
-                          EPartnerIcons.print,
-                          color: Colors.black,
-                        ),
-                        SizedBox(width: 13),
-                        Expanded(
-                          child: Text("Impresoras",
+                          child: Text("Home",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 17,

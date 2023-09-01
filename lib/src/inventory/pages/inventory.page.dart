@@ -75,15 +75,15 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                     child: Column(
               children: [
                 const SizedBox(
-                  height: 30,
+                  height: 25,
                 ),
                 AlmacenInventory(nomAlmacen: ubiSelected.nomAlmacen),
-
                 UbicacionInventory(nomUbicacion: ubiSelected.nomUbicacion),
+                ConteoInventory(conteo: ubiSelected.conteo),
                 //Codigo
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -111,7 +111,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                 //Descripcion
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
                   child: VersionOneTextField(
                     controller: descripcionController,
                     name: "Descripcion",
@@ -128,7 +128,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                 //Cantidad
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
                   child: VersionOneTextField(
                     controller: cantidadController,
                     name: "Cantidad",
@@ -140,7 +140,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                 //Observacion
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
@@ -185,6 +185,9 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                   ),
                 ),
                 //Observacion
+                const SizedBox(
+                  height: 10,
+                ),
                 //Fotos
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -375,7 +378,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                 //Buttons
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -495,6 +498,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
 }
 
 //ALMACEN NAME
+// ignore: must_be_immutable
 class AlmacenInventory extends StatelessWidget {
   String? nomAlmacen;
   AlmacenInventory({super.key, this.nomAlmacen});
@@ -520,6 +524,7 @@ class AlmacenInventory extends StatelessWidget {
 }
 
 //Ubicacion NAME
+// ignore: must_be_immutable
 class UbicacionInventory extends StatelessWidget {
   String? nomUbicacion;
   UbicacionInventory({super.key, this.nomUbicacion});
@@ -532,6 +537,30 @@ class UbicacionInventory extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Text(
             "Ubicacion ${nomUbicacion!}",
+            style: const TextStyle(
+              fontFamily: 'Roboto',
+              fontSize: 20,
+              fontWeight: FontWeight.w900,
+              color: Colors.white,
+            ),
+          ),
+        ));
+  }
+}
+
+// ignore: must_be_immutable
+class ConteoInventory extends StatelessWidget {
+  String? conteo;
+  ConteoInventory({super.key, this.conteo});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 50),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            "Nº Conteo ${conteo!}",
             style: const TextStyle(
               fontFamily: 'Roboto',
               fontSize: 20,

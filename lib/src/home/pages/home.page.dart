@@ -4,35 +4,66 @@ import 'package:go_router/go_router.dart';
 import 'package:incosys/src/home/pages/scanner.page.dart';
 import 'package:incosys/src/home/providers/almacen.provider.dart';
 import 'package:incosys/src/home/providers/ubicacion.provider.dart';
+import 'package:incosys/src/login/providers/seguridaduser.provider.dart';
+import 'package:incosys/src/shared/navbar/widgets/navbar_drawer.dart';
 import 'package:incosys/src/shared/widgets/textfield_v1.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   static const String name = 'home_page';
-
-  const HomePage({super.key});
+  final String? user;
+  final String? ruc;
+  final String? pwd;
+  const HomePage({
+    super.key,
+    this.user,
+    this.ruc,
+    this.pwd,
+  });
 
   @override
-  HomePageState createState() => HomePageState();
+  // ignore: no_logic_in_create_state
+  HomePageState createState() => HomePageState(user, ruc, pwd);
 }
 
 class HomePageState extends ConsumerState<HomePage> {
   late String codAlmacen;
   late String nomAlmacen;
+  final String? user;
+  final String? ruc;
+  final String? pwd;
+  HomePageState(this.user, this.ruc, this.pwd);
+
   @override
   void initState() {
     super.initState();
-    codAlmacen = '';
-    nomAlmacen = '';
-    ref.read(almacenProvider.notifier).getAlmacenes();
+    if (user != null) {
+      ref.read(seguridadUserProvider.notifier).postLogin(
+            ruc: ruc!,
+            uid: user!,
+            pwd: pwd!,
+            afterLogged: () {
+              codAlmacen = '';
+              nomAlmacen = '';
+              ref.read(almacenProvider.notifier).getAlmacenes();
+            },
+          );
+    } else {
+      codAlmacen = '';
+      nomAlmacen = '';
+      ref.read(almacenProvider.notifier).getAlmacenes();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final ubicacionController = TextEditingController();
     final conteoController = TextEditingController();
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Scaffold(
+      key: scaffoldKey,
       resizeToAvoidBottomInset: false,
+      drawer: const NavbarDrawer(),
       extendBodyBehindAppBar: true,
       backgroundColor: const Color.fromRGBO(26, 47, 76, 1),
       body: Container(
@@ -47,10 +78,16 @@ class HomePageState extends ConsumerState<HomePage> {
             SafeArea(
                 child: Column(
               children: [
+                Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  IconButton(
+                    color: Colors.white,
+                    icon: const Icon(Icons.menu),
+                    onPressed: () => scaffoldKey.currentState?.openDrawer(),
+                  ),
+                ]),
                 const SizedBox(
-                  height: 100,
-                ),
-                //Almacen
+                  height: 80,
+                ), //Almacen
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
@@ -95,14 +132,14 @@ class HomePageState extends ConsumerState<HomePage> {
                                   color: Colors.white,
                                   fontSize: 14,
                                   fontWeight: FontWeight.normal),
-                              //value: codAlmacen != '' ? codAlmacen : null,
                               onChanged: (String? newValue) {
-                                setState(() {
-                                  List<String> aux = newValue!.split('/');
-                                  codAlmacen = aux[0];
-                                  nomAlmacen = aux[1];
+                                List<String> aux = newValue!.split('/');
+                                codAlmacen = aux[0];
+                                nomAlmacen = aux[1];
+                                /* setState(() {
+                                  
                                   //codAlmacen = newValue!;
-                                });
+                                }); */
                               },
                               items: ref
                                   .watch(almacenProvider)
@@ -158,7 +195,7 @@ class HomePageState extends ConsumerState<HomePage> {
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                   child: VersionOneTextField(
                     controller: conteoController,
-                    name: "Conteo",
+                    name: "Numero de Conteo",
                     type: TextInputType.number,
                     onChanged: null,
                   ),
@@ -189,6 +226,7 @@ class HomePageState extends ConsumerState<HomePage> {
                               codAlmacen: codAlmacen,
                               nomUbicacion: ubicacionController.text,
                               nomAlmacen: nomAlmacen,
+                              conteo: conteoController.text,
                               afterGetData: () {
                                 if (ref.watch(ubicacionProvider).resultado !=
                                     'OK') {

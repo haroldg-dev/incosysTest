@@ -1,3 +1,4 @@
+import 'package:get_storage/get_storage.dart';
 import 'package:incosys/src/shared/helpers/epartnet.icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,15 +13,23 @@ class LoginForm extends ConsumerStatefulWidget {
 }
 
 class LoginFormState extends ConsumerState<LoginForm> {
+  GetStorage box = GetStorage();
+  bool saveSession = false;
+  var ruc = TextEditingController();
+  var user = TextEditingController();
+  var password = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(seguridadUserProvider.notifier).logout();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final ruc = TextEditingController();
-    final user = TextEditingController();
-    final password = TextEditingController();
-
-    ruc.text = '20603280157';
+    /* ruc.text = '20603280157';
     user.text = 'esau.hernandez@gmail.com';
-    password.text = '88552233';
+    password.text = '88552233'; */
 
     return Column(
       children: [
@@ -135,7 +144,45 @@ class LoginFormState extends ConsumerState<LoginForm> {
           ),
         ),
         //CONTRASEÑA
+        //GUARDAR SESION
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Checkbox(
+                value: saveSession,
+                onChanged: (value) {
+                  setState(() {
+                    saveSession = !saveSession;
+                    ruc.text = ruc.text;
+                    user.text = user.text;
+                    password.text = password.text;
+                  });
+                  if (saveSession == true) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("SaveSession True"),
+                    ));
+                  }
+                  if (saveSession == false) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("SaveSession False"),
+                    ));
+                  }
+                },
+              ),
+              const Text(
+                'Guardar Sesión',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
 
+        //GUARDAR SESION
         //BOTON
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
@@ -161,6 +208,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                       ruc: ruc.text,
                       uid: user.text,
                       pwd: password.text,
+                      saveSession: saveSession,
                       afterLogged: () {
                         if (ref.watch(seguridadUserProvider).log != 'OK') {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(

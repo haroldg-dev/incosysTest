@@ -15,6 +15,7 @@ class UbicacionController {
     String codAlmacen = '',
     String nomUbicacion = '',
     String nomAlmacen = '',
+    String conteo = '',
   }) async {
     final authenticatedUser = {
       "ruc": ruc,
@@ -30,7 +31,10 @@ class UbicacionController {
     final ubicacionResponse = UbicacionResponse.fromJson(response.data[0]);
 
     final Ubicacion ubicacion = UbicacionMapper.dataToEntity(
-        ubicacionResponse.data![0], response.data[0]["resultado"], nomAlmacen);
+        ubicacionResponse.data![0],
+        response.data[0]["resultado"],
+        nomAlmacen,
+        conteo);
 
     return ubicacion;
   }

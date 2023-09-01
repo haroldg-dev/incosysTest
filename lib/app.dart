@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:incosys/src/inventory/pages/inventory.page.dart';
 import 'package:incosys/src/login/pages/login.page.dart';
 import 'package:incosys/src/home/pages/home.page.dart';
-import 'package:incosys/src/shared/navbar/screen/navbar.screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
 final GlobalKey<NavigatorState> _shellNavigator =
