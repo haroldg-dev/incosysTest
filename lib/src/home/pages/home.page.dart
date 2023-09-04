@@ -65,7 +65,6 @@ class HomePageState extends ConsumerState<HomePage> {
       resizeToAvoidBottomInset: false,
       drawer: const NavbarDrawer(),
       extendBodyBehindAppBar: true,
-      backgroundColor: const Color.fromRGBO(26, 47, 76, 1),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -103,13 +102,13 @@ class HomePageState extends ConsumerState<HomePage> {
                       child: ButtonTheme(
                           alignedDropdown: true,
                           child: DropdownButtonFormField<String>(
-                              dropdownColor:
-                                  const Color.fromRGBO(26, 47, 76, 1),
+                              dropdownColor: Colors.white,
                               isExpanded: true,
                               icon: const Icon(Icons.keyboard_arrow_down),
                               hint: const Text(
                                 "Seleccione almacen",
-                                style: TextStyle(color: Colors.white70),
+                                style: TextStyle(
+                                    color: Color.fromRGBO(100, 100, 100, 1)),
                               ),
                               decoration: const InputDecoration(
                                 enabledBorder: OutlineInputBorder(
@@ -120,7 +119,7 @@ class HomePageState extends ConsumerState<HomePage> {
                                       BorderRadius.all(Radius.circular(10.0)),
                                 ),
                                 filled: true,
-                                fillColor: Color.fromRGBO(26, 47, 76, 1),
+                                fillColor: Colors.white,
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                       width: 2, color: Colors.white60),
@@ -129,7 +128,7 @@ class HomePageState extends ConsumerState<HomePage> {
                                 ),
                               ),
                               style: const TextStyle(
-                                  color: Colors.white,
+                                  color: Color.fromRGBO(100, 100, 100, 1),
                                   fontSize: 14,
                                   fontWeight: FontWeight.normal),
                               onChanged: (String? newValue) {
@@ -149,7 +148,8 @@ class HomePageState extends ConsumerState<HomePage> {
                                         child: Text(
                                           op.nomAlmacen,
                                           style: const TextStyle(
-                                              color: Colors.white),
+                                              color: Color.fromRGBO(
+                                                  100, 100, 100, 1)),
                                         ),
                                       ))
                                   .toList()))),
@@ -173,7 +173,7 @@ class HomePageState extends ConsumerState<HomePage> {
                         ),
                       ),
                       IconButton(
-                        color: Colors.white,
+                        color: const Color.fromRGBO(102, 102, 102, 1),
                         icon: const Icon(Icons.qr_code_scanner),
                         onPressed: () => showDialog<String>(
                           context: context,
@@ -214,7 +214,7 @@ class HomePageState extends ConsumerState<HomePage> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              const Color.fromRGBO(255, 180, 184, 1),
+                              const Color.fromRGBO(51, 102, 102, 1),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           )),
@@ -253,7 +253,7 @@ class HomePageState extends ConsumerState<HomePage> {
                             fontSize: 16,
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w900,
-                            color: Color.fromRGBO(19, 39, 66, 1)),
+                            color: Colors.white),
                       ),
                     ),
                   ),

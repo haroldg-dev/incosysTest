@@ -60,7 +60,6 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
-      backgroundColor: const Color.fromRGBO(26, 47, 76, 1),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -155,7 +154,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                       decoration: const InputDecoration(
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                              width: 0, color: Color.fromRGBO(26, 47, 76, 1)),
+                              width: 0, color: Color.fromRGBO(26, 47, 76, 0)),
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
                         focusedBorder: OutlineInputBorder(
@@ -164,12 +163,13 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
                         filled: true,
-                        fillColor: Color.fromRGBO(26, 47, 76, 1),
+                        fillColor: Colors.white,
                         hintText: "Observación",
-                        hintStyle: TextStyle(color: Colors.white70),
+                        hintStyle:
+                            TextStyle(color: Color.fromRGBO(100, 100, 100, 1)),
                       ),
                       style: const TextStyle(
-                          color: Colors.white,
+                          color: Color.fromRGBO(128, 128, 128, 1),
                           fontSize: 14,
                           fontWeight: FontWeight.normal),
                       keyboardType: TextInputType.multiline,
@@ -206,7 +206,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                       borderRadius: BorderRadius.circular(10.0),
                                       boxShadow: const [
                                         BoxShadow(
-                                            color: Colors.white70,
+                                            color: Colors.black45,
                                             blurRadius: 5.0,
                                             spreadRadius: 0.9)
                                       ]),
@@ -221,8 +221,8 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                 ),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromRGBO(26, 47, 76, 0.1),
+                                      backgroundColor: const Color.fromRGBO(
+                                          51, 102, 102, 0.1),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       )),
@@ -244,14 +244,14 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                     borderRadius: BorderRadius.circular(10.0),
                                     boxShadow: const [
                                       BoxShadow(
-                                          color: Colors.white70,
+                                          color: Colors.black45,
                                           blurRadius: 5.0,
                                           spreadRadius: 0.9)
                                     ]),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor:
-                                          const Color.fromRGBO(26, 47, 76, 1),
+                                          const Color.fromRGBO(51, 102, 102, 1),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       )),
@@ -341,14 +341,14 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                       borderRadius: BorderRadius.circular(10.0),
                                       boxShadow: const [
                                         BoxShadow(
-                                            color: Colors.white70,
+                                            color: Colors.black45,
                                             blurRadius: 5.0,
                                             spreadRadius: 0.9)
                                       ]),
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                            const Color.fromRGBO(26, 47, 76, 1),
+                                        backgroundColor: const Color.fromRGBO(
+                                            51, 102, 102, 1),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -390,7 +390,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                           height: 40,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
+                                backgroundColor: Colors.white24,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 )),
@@ -403,7 +403,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                   fontSize: 14,
                                   fontFamily: 'Roboto',
                                   fontWeight: FontWeight.w900,
-                                  color: Color.fromRGBO(19, 39, 66, 1)),
+                                  color: Colors.white),
                             ),
                           ),
                         ),
@@ -417,7 +417,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor:
-                                    const Color.fromRGBO(255, 180, 184, 1),
+                                    const Color.fromRGBO(51, 102, 102, 1),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 )),
@@ -436,6 +436,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                         codArticulo: codigoController.text,
                                         nomArticulo: descripcionController.text,
                                         cantidad: cantidadController.text,
+                                        conteo: ubiSelected.conteo,
                                         observacion: observacionController.text,
                                         etiqueta: etiqueta,
                                         imagenes: fotoArticulos,
@@ -480,7 +481,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                   fontSize: 14,
                                   fontFamily: 'Roboto',
                                   fontWeight: FontWeight.w900,
-                                  color: Color.fromRGBO(19, 39, 66, 1)),
+                                  color: Colors.white),
                             ),
                           ),
                         ),

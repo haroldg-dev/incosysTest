@@ -159,7 +159,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                     user.text = user.text;
                     password.text = password.text;
                   });
-                  if (saveSession == true) {
+                  /* if (saveSession == true) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("SaveSession True"),
                     ));
@@ -168,7 +168,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("SaveSession False"),
                     ));
-                  }
+                  } */
                 },
               ),
               const Text(
