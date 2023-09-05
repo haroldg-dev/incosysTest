@@ -34,7 +34,7 @@ class VersionOneTextFieldState extends ConsumerState<VersionOneTextField> {
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
             borderSide:
-                BorderSide(width: 0, color: Color.fromRGBO(26, 47, 76, 1)),
+                BorderSide(width: 0, color: Color.fromRGBO(26, 47, 76, 0)),
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
           ),
           focusedBorder: const OutlineInputBorder(
@@ -42,12 +42,14 @@ class VersionOneTextFieldState extends ConsumerState<VersionOneTextField> {
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
           ),
           filled: true,
-          fillColor: const Color.fromRGBO(26, 47, 76, 1),
+          fillColor: Colors.white,
           hintText: widget.name,
-          hintStyle: const TextStyle(color: Colors.white70),
+          hintStyle: const TextStyle(color: Color.fromRGBO(100, 100, 100, 1)),
         ),
         style: const TextStyle(
-            color: Colors.white, fontSize: 14, fontWeight: FontWeight.normal),
+            color: Color.fromRGBO(100, 100, 100, 1),
+            fontSize: 14,
+            fontWeight: FontWeight.normal),
         keyboardType: widget.type,
         onChanged: widget.onChanged,
       ),

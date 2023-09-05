@@ -118,21 +118,21 @@ class Autor extends StatelessWidget {
                 fontSize: 14,
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.w700,
-                color: Color.fromRGBO(255, 180, 184, 1))),
+                color: Color.fromRGBO(51, 102, 102, 1))),
         Text(
           'Version ',
           style: TextStyle(
               fontSize: 14,
               fontFamily: 'Roboto',
               fontWeight: FontWeight.w400,
-              color: Colors.white),
+              color: Color.fromRGBO(128, 128, 128, 1)),
         ),
         Text('1.0',
             style: TextStyle(
                 fontSize: 14,
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.w900,
-                color: Colors.white)),
+                color: Color.fromRGBO(128, 128, 128, 1))),
       ],
     );
   }

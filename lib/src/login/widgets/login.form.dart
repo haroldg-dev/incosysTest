@@ -27,9 +27,9 @@ class LoginFormState extends ConsumerState<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    /* ruc.text = '20603280157';
+    ruc.text = '20603280157';
     user.text = 'esau.hernandez@gmail.com';
-    password.text = '88552233'; */
+    password.text = '88552233';
 
     return Column(
       children: [
@@ -51,7 +51,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
               decoration: const InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                      width: 0, color: Color.fromRGBO(26, 47, 76, 1)),
+                      width: 0, color: Color.fromRGBO(26, 47, 76, 0)),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
                 focusedBorder: OutlineInputBorder(
@@ -59,13 +59,13 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
                 filled: true,
-                fillColor: Color.fromRGBO(26, 47, 76, 1),
-                hintText: 'RUC',
-                hintStyle: TextStyle(color: Colors.white54),
+                fillColor: Colors.white,
+                hintText: 'Ruc',
+                hintStyle: TextStyle(color: Color.fromRGBO(128, 128, 128, 1)),
                 prefixIcon: Icon(EPartnerIcons.layer_group,
-                    color: Colors.white, size: 25),
+                    color: Color.fromRGBO(128, 128, 128, 1), size: 25),
               ),
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: Color.fromRGBO(100, 100, 100, 1)),
               keyboardType: TextInputType.number,
             ),
           ),
@@ -87,7 +87,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
               decoration: const InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                      width: 0, color: Color.fromRGBO(26, 47, 76, 1)),
+                      width: 0, color: Color.fromRGBO(26, 47, 76, 0)),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
                 focusedBorder: OutlineInputBorder(
@@ -95,13 +95,13 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
                 filled: true,
-                fillColor: Color.fromRGBO(26, 47, 76, 1),
+                fillColor: Colors.white,
                 hintText: 'Usuario',
-                hintStyle: TextStyle(color: Colors.white54),
-                prefixIcon:
-                    Icon(EPartnerIcons.user, color: Colors.white, size: 25),
+                hintStyle: TextStyle(color: Color.fromRGBO(128, 128, 128, 1)),
+                prefixIcon: Icon(EPartnerIcons.user,
+                    color: Color.fromRGBO(128, 128, 128, 1), size: 25),
               ),
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: Color.fromRGBO(100, 100, 100, 1)),
               keyboardType: TextInputType.emailAddress,
             ),
           ),
@@ -124,7 +124,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
               decoration: const InputDecoration(
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                      width: 0, color: Color.fromRGBO(26, 47, 76, 1)),
+                      width: 0, color: Color.fromRGBO(26, 47, 76, 0)),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
                 focusedBorder: OutlineInputBorder(
@@ -132,13 +132,13 @@ class LoginFormState extends ConsumerState<LoginForm> {
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
                 filled: true,
-                fillColor: Color.fromRGBO(26, 47, 76, 1),
+                fillColor: Colors.white,
                 hintText: 'Contraseña',
-                hintStyle: TextStyle(color: Colors.white54),
-                prefixIcon:
-                    Icon(EPartnerIcons.lock, color: Colors.white, size: 25),
+                hintStyle: TextStyle(color: Color.fromRGBO(128, 128, 128, 1)),
+                prefixIcon: Icon(EPartnerIcons.lock,
+                    color: Color.fromRGBO(128, 128, 128, 1), size: 25),
               ),
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: Color.fromRGBO(100, 100, 100, 1)),
               keyboardType: TextInputType.visiblePassword,
             ),
           ),
@@ -159,7 +159,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                     user.text = user.text;
                     password.text = password.text;
                   });
-                  if (saveSession == true) {
+                  /* if (saveSession == true) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("SaveSession True"),
                     ));
@@ -168,14 +168,14 @@ class LoginFormState extends ConsumerState<LoginForm> {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("SaveSession False"),
                     ));
-                  }
+                  } */
                 },
               ),
               const Text(
                 'Guardar Sesión',
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.white,
+                  color: Color.fromRGBO(128, 128, 128, 1),
                 ),
               ),
             ],
@@ -198,7 +198,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
             height: 55,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(255, 180, 184, 1),
+                  backgroundColor: const Color.fromRGBO(51, 102, 102, 1),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   )),
@@ -233,7 +233,7 @@ class LoginFormState extends ConsumerState<LoginForm> {
                     fontSize: 18,
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w700,
-                    color: Color.fromRGBO(19, 39, 66, 1)),
+                    color: Colors.white),
               ),
             ),
           ),

@@ -31,6 +31,7 @@ class SeguridadUserNotifier extends StateNotifier<SeguridadUser> {
     );
     if (saveSession == true) {
       SharedPreferences pref = await SharedPreferences.getInstance();
+      pref.setString('saved', 'true');
       pref.setString("user", uid);
       pref.setString('ruc', ruc);
       pref.setString('pass', pwd);
@@ -42,9 +43,10 @@ class SeguridadUserNotifier extends StateNotifier<SeguridadUser> {
 
   Future<void> logout() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    var user = pref.getString('user');
-    user != null
+    var saved = pref.getString('saved');
+    saved == 'true'
         ? {
+            pref.setString('saved', 'false'),
             pref.remove("user"),
             pref.remove('ruc'),
             pref.remove('pass'),
