@@ -21,12 +21,14 @@ class InventoryPage extends ConsumerStatefulWidget {
 class InventoryPageState extends ConsumerState<InventoryPage> {
   List<String> fotoArticulos = [];
   String etiqueta = '';
+  bool isLoading = false;
   late Ubicacion ubiSelected;
   final ImagePicker imgpicker = ImagePicker();
   final codigoController = TextEditingController();
   final descripcionController = TextEditingController();
   final cantidadController = TextEditingController();
   final observacionController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -421,68 +423,93 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 )),
-                            onPressed: () {
-                              if (codigoController.text != '' &&
-                                  descripcionController.text != '' &&
-                                  cantidadController.text != '' &&
-                                  etiqueta != '') {
-                                ref
-                                    .read(inventarioProvider.notifier)
-                                    .setInventario(
-                                        codAlmacen:
-                                            ubiSelected.codAlmacen.toString(),
-                                        codUbicacion:
-                                            ubiSelected.codUbicacion.toString(),
-                                        codArticulo: codigoController.text,
-                                        nomArticulo: descripcionController.text,
-                                        cantidad: cantidadController.text,
-                                        conteo: ubiSelected.conteo,
-                                        observacion: observacionController.text,
-                                        etiqueta: etiqueta,
-                                        imagenes: fotoArticulos,
-                                        afterSetData: () {
-                                          if (ref
-                                                  .watch(ubicacionProvider)
-                                                  .resultado !=
-                                              'OK') {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(SnackBar(
-                                              content: Text(ref
-                                                  .watch(ubicacionProvider)
-                                                  .resultado),
-                                            ));
-                                          } else {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(const SnackBar(
-                                              content:
-                                                  Text("Grabación Exitosa"),
-                                            ));
-                                            setState(() {
-                                              codigoController.text = '';
-                                              descripcionController.text = '';
-                                              cantidadController.text = '';
-                                              observacionController.text = '';
-                                              etiqueta = '';
-                                              fotoArticulos = [];
-                                            });
-                                          }
-                                        });
-                              } else {
-                                ScaffoldMessenger.of(context)
-                                    .showSnackBar(const SnackBar(
-                                  content: Text(
-                                      "Ventana  los campos son obligatorios"),
-                                ));
-                              }
-                            },
-                            child: const Text(
-                              'Grabar',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.white),
-                            ),
+                            onPressed: isLoading == false
+                                ? () {
+                                    if (codigoController.text != '' &&
+                                        descripcionController.text != '' &&
+                                        cantidadController.text != '' &&
+                                        etiqueta != '') {
+                                      isLoading = true;
+                                      ref
+                                          .read(inventarioProvider.notifier)
+                                          .setInventario(
+                                              codAlmacen: ubiSelected.codAlmacen
+                                                  .toString(),
+                                              codUbicacion: ubiSelected
+                                                  .codUbicacion
+                                                  .toString(),
+                                              codArticulo:
+                                                  codigoController.text,
+                                              nomArticulo:
+                                                  descripcionController.text,
+                                              cantidad: cantidadController.text,
+                                              conteo: ubiSelected.conteo,
+                                              observacion:
+                                                  observacionController.text,
+                                              etiqueta: etiqueta,
+                                              imagenes: fotoArticulos,
+                                              afterSetData: () {
+                                                if (ref
+                                                        .watch(
+                                                            ubicacionProvider)
+                                                        .resultado !=
+                                                    'OK') {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                    content: Text(ref
+                                                        .watch(
+                                                            ubicacionProvider)
+                                                        .resultado),
+                                                  ));
+                                                  isLoading = false;
+                                                } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                          const SnackBar(
+                                                    content: Text(
+                                                        "Grabación Exitosa"),
+                                                  ));
+                                                  isLoading = false;
+                                                  setState(() {
+                                                    codigoController.text = '';
+                                                    descripcionController.text =
+                                                        '';
+                                                    cantidadController.text =
+                                                        '';
+                                                    observacionController.text =
+                                                        '';
+                                                    etiqueta = '';
+                                                    fotoArticulos = [];
+                                                  });
+                                                }
+                                              });
+                                    } else {
+                                      isLoading = false;
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                        content: Text(
+                                            "Ventana  los campos son obligatorios"),
+                                      ));
+                                    }
+                                  }
+                                : () {},
+                            child: isLoading == false
+                                ? const Text(
+                                    'Grabar',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w900,
+                                        color: Colors.white),
+                                  )
+                                : const Text(
+                                    'Cargando ...',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w900,
+                                        color: Colors.white),
+                                  ),
                           ),
                         ),
                       ),

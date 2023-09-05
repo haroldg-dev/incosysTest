@@ -77,7 +77,7 @@ class HomePageState extends ConsumerState<HomePage> {
             SafeArea(
                 child: Column(
               children: [
-                Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                   IconButton(
                     color: Colors.white,
                     icon: const Icon(Icons.menu),
