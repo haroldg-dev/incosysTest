@@ -63,7 +63,7 @@ class InventarioNotifier extends StateNotifier<Inventario> {
       etiqueta: etiqueta64,
       imagenes: imagenes64,
     );
-
+    await Future.delayed(const Duration(seconds: 1));
     state = inventario;
     afterSetData();
   }
