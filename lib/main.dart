@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:incosys/app.dart';
+// import 'package:incosys/app.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:incosys/src/home/pages/home.page.dart';
 import 'package:incosys/src/inventory/pages/inventory.page.dart';
@@ -32,8 +32,7 @@ class MyApp extends StatelessWidget {
   final String? pwd;
   MyApp({super.key, required this.user, required this.ruc, required this.pwd});
 
-  final GlobalKey<NavigatorState> _rootNavigator =
-      GlobalKey(debugLabel: 'root');
+  final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
 
   @override
   Widget build(BuildContext context) {
