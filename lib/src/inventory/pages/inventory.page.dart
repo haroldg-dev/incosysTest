@@ -38,16 +38,14 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
   Future getImage(
     ImageSource media,
   ) async {
-    var img = await imgpicker.pickImage(
-        source: media, imageQuality: 50, maxHeight: 720);
+    var img = await imgpicker.pickImage(source: media, imageQuality: 50, maxHeight: 720);
     etiqueta = img!.path;
     setState(() {});
   }
 
   Future getListImages(ImageSource media) async {
     if (fotoArticulos.length < 4) {
-      var img = await imgpicker.pickImage(
-          source: media, imageQuality: 50, maxHeight: 720);
+      var img = await imgpicker.pickImage(source: media, imageQuality: 50, maxHeight: 720);
       fotoArticulos.add(img!.path);
       setState(() {});
     } else {
@@ -66,6 +64,19 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
       drawer: const NavbarDrawer(),
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: const Text(
+          "Registrar inventario",
+          style: TextStyle(color: Colors.white, fontFamily: 'Roboto', fontSize: 16, fontWeight: FontWeight.w300),
+        ),
+        centerTitle: true,
+        toolbarHeight: 50,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(bottomRight: Radius.circular(25), bottomLeft: Radius.circular(25)),
+        ),
+        elevation: 2.00,
+        backgroundColor: Colors.black,
+      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -79,6 +90,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                 child: SingleChildScrollView(
                     child: Column(
               children: [
+                /*
                 Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                   IconButton(
                     color: Colors.white,
@@ -87,13 +99,14 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                     //onPressed: null,
                   ),
                 ]),
+
+                */
                 AlmacenInventory(nomAlmacen: ubiSelected.nomAlmacen),
                 UbicacionInventory(nomUbicacion: ubiSelected.nomUbicacion),
                 ConteoInventory(conteo: ubiSelected.conteo),
                 //Codigo
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -110,8 +123,8 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                         icon: const Icon(Icons.qr_code_scanner),
                         onPressed: () => showDialog<String>(
                           context: context,
-                          builder: (BuildContext context) => Dialog.fullscreen(
-                              child: ScannerPage(controller: codigoController)),
+                          builder: (BuildContext context) =>
+                              Dialog.fullscreen(child: ScannerPage(controller: codigoController)),
                         ),
                       ),
                     ],
@@ -120,8 +133,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                 //Codigo
                 //Descripcion
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
                   child: VersionOneTextField(
                     controller: descripcionController,
                     name: "Descripcion",
@@ -137,8 +149,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                 //Descripcion
                 //Cantidad
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
                   child: VersionOneTextField(
                     controller: cantidadController,
                     name: "Cantidad",
@@ -149,40 +160,29 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                 //Cantidad
                 //Observacion
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.black38,
-                              blurRadius: 3.0,
-                              spreadRadius: 0.6)
-                        ]),
+                        boxShadow: const [BoxShadow(color: Colors.black38, blurRadius: 3.0, spreadRadius: 0.6)]),
                     child: TextField(
                       controller: observacionController,
                       decoration: const InputDecoration(
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              width: 0, color: Color.fromRGBO(26, 47, 76, 0)),
+                          borderSide: BorderSide(width: 0, color: Color.fromRGBO(26, 47, 76, 0)),
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 2, color: Colors.white60),
+                          borderSide: BorderSide(width: 2, color: Colors.white60),
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         ),
                         filled: true,
                         fillColor: Colors.white,
                         hintText: "Observación",
-                        hintStyle:
-                            TextStyle(color: Color.fromRGBO(100, 100, 100, 1)),
+                        hintStyle: TextStyle(color: Color.fromRGBO(100, 100, 100, 1)),
                       ),
                       style: const TextStyle(
-                          color: Color.fromRGBO(128, 128, 128, 1),
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal),
+                          color: Color.fromRGBO(128, 128, 128, 1), fontSize: 14, fontWeight: FontWeight.normal),
                       keyboardType: TextInputType.multiline,
                       minLines: 2,
                       maxLines: 4,
@@ -205,8 +205,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                   children: [
                     //Foto Etiqueta
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 15),
+                      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                       child: SizedBox(
                         width: 130,
                         height: 130,
@@ -216,10 +215,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10.0),
                                       boxShadow: const [
-                                        BoxShadow(
-                                            color: Colors.black45,
-                                            blurRadius: 5.0,
-                                            spreadRadius: 0.9)
+                                        BoxShadow(color: Colors.black45, blurRadius: 5.0, spreadRadius: 0.9)
                                       ]),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
@@ -232,8 +228,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                 ),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color.fromRGBO(
-                                          51, 102, 102, 0.1),
+                                      backgroundColor: const Color.fromRGBO(51, 102, 102, 0.1),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       )),
@@ -251,18 +246,12 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                 ),
                               ])
                             : Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                          color: Colors.black45,
-                                          blurRadius: 5.0,
-                                          spreadRadius: 0.9)
-                                    ]),
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0), boxShadow: const [
+                                  BoxShadow(color: Colors.black45, blurRadius: 5.0, spreadRadius: 0.9)
+                                ]),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromRGBO(51, 102, 102, 1),
+                                      backgroundColor: const Color.fromRGBO(51, 102, 102, 1),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       )),
@@ -284,8 +273,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                     //Foto Etiqueta
                     //Fotos Articulo
                     Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 15),
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                         child: SizedBox(
                           width: 130,
                           height: 130,
@@ -293,15 +281,10 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                               ? Stack(fit: StackFit.expand, children: <Widget>[
                                   Container(
                                     decoration: BoxDecoration(
-                                        color: const Color.fromRGBO(
-                                            26, 47, 76, 0.7),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
+                                        color: const Color.fromRGBO(26, 47, 76, 0.7),
+                                        borderRadius: BorderRadius.circular(10.0),
                                         boxShadow: const [
-                                          BoxShadow(
-                                              color: Colors.white70,
-                                              blurRadius: 5.0,
-                                              spreadRadius: 0.9)
+                                          BoxShadow(color: Colors.white70, blurRadius: 5.0, spreadRadius: 0.9)
                                         ]),
                                     child: Wrap(
                                       spacing: 5,
@@ -313,8 +296,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                           width: 60,
                                           height: 60,
                                           child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
+                                            borderRadius: BorderRadius.circular(8),
                                             child: Image.file(
                                               //to show image, you type like this.
                                               File(articulo),
@@ -327,11 +309,9 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                   ),
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromRGBO(
-                                            26, 47, 76, 0.1),
+                                        backgroundColor: const Color.fromRGBO(26, 47, 76, 0.1),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(10),
                                         )),
                                     onPressed: () {
                                       getListImages(ImageSource.camera);
@@ -351,18 +331,13 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10.0),
                                       boxShadow: const [
-                                        BoxShadow(
-                                            color: Colors.black45,
-                                            blurRadius: 5.0,
-                                            spreadRadius: 0.9)
+                                        BoxShadow(color: Colors.black45, blurRadius: 5.0, spreadRadius: 0.9)
                                       ]),
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromRGBO(
-                                            51, 102, 102, 1),
+                                        backgroundColor: const Color.fromRGBO(51, 102, 102, 1),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                          borderRadius: BorderRadius.circular(10),
                                         )),
                                     onPressed: () {
                                       getListImages(ImageSource.camera);
@@ -388,14 +363,12 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                 ),
                 //Buttons
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                  padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 15),
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                         child: SizedBox(
                           width: 130,
                           height: 40,
@@ -411,17 +384,13 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                             child: const Text(
                               'Salir',
                               style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'Roboto',
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.white),
+                                  fontSize: 14, fontFamily: 'Roboto', fontWeight: FontWeight.w900, color: Colors.white),
                             ),
                           ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 15),
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                         child: SizedBox(
                           width: 130,
                           height: 40,
@@ -431,8 +400,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                 color: Colors.white,
                               ),
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      const Color.fromRGBO(51, 102, 102, 1),
+                                  backgroundColor: const Color.fromRGBO(51, 102, 102, 1),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   )),
@@ -448,8 +416,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                       child: SizedBox(
                                         height: 80,
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             CircularProgressIndicator(
@@ -476,57 +443,41 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                     descripcionController.text != '' &&
                                     cantidadController.text != '' &&
                                     etiqueta != '') {
-                                  ref
-                                      .read(inventarioProvider.notifier)
-                                      .setInventario(
-                                          codAlmacen:
-                                              ubiSelected.codAlmacen.toString(),
-                                          codUbicacion: ubiSelected.codUbicacion
-                                              .toString(),
-                                          codArticulo: codigoController.text,
-                                          nomArticulo:
-                                              descripcionController.text,
-                                          cantidad: cantidadController.text,
-                                          conteo: ubiSelected.conteo,
-                                          observacion:
-                                              observacionController.text,
-                                          etiqueta: etiqueta,
-                                          imagenes: fotoArticulos,
-                                          afterSetData: () {
-                                            if (ref
-                                                    .watch(ubicacionProvider)
-                                                    .resultado !=
-                                                'OK') {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: Text(ref
-                                                    .watch(ubicacionProvider)
-                                                    .resultado),
-                                              ));
-                                              Navigator.pop(context);
-                                            } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(const SnackBar(
-                                                content:
-                                                    Text("Grabación Exitosa"),
-                                              ));
-                                              Navigator.pop(context);
-                                              setState(() {
-                                                codigoController.text = '';
-                                                descripcionController.text = '';
-                                                cantidadController.text = '';
-                                                observacionController.text = '';
-                                                etiqueta = '';
-                                                fotoArticulos = [];
-                                              });
-                                            }
+                                  ref.read(inventarioProvider.notifier).setInventario(
+                                      codAlmacen: ubiSelected.codAlmacen.toString(),
+                                      codUbicacion: ubiSelected.codUbicacion.toString(),
+                                      codArticulo: codigoController.text,
+                                      nomArticulo: descripcionController.text,
+                                      cantidad: cantidadController.text,
+                                      conteo: ubiSelected.conteo,
+                                      observacion: observacionController.text,
+                                      etiqueta: etiqueta,
+                                      imagenes: fotoArticulos,
+                                      afterSetData: () {
+                                        if (ref.watch(ubicacionProvider).resultado != 'OK') {
+                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                            content: Text(ref.watch(ubicacionProvider).resultado),
+                                          ));
+                                          Navigator.pop(context);
+                                        } else {
+                                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                            content: Text("Grabación Exitosa"),
+                                          ));
+                                          Navigator.pop(context);
+                                          setState(() {
+                                            codigoController.text = '';
+                                            descripcionController.text = '';
+                                            cantidadController.text = '';
+                                            observacionController.text = '';
+                                            etiqueta = '';
+                                            fotoArticulos = [];
                                           });
+                                        }
+                                      });
                                 } else {
                                   Navigator.pop(context);
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    content: Text(
-                                        "Ventana  los campos son obligatorios"),
+                                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                    content: Text("Ventana  los campos son obligatorios"),
                                   ));
                                 }
                               },

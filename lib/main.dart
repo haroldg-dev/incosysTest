@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:incosys/src/home/pages/home.page.dart';
 import 'package:incosys/src/inventory/pages/inventory.page.dart';
+import 'package:incosys/src/listinventory/pages/listinventory.page.dart';
 import 'package:incosys/src/login/pages/login.page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -57,6 +58,20 @@ class MyApp extends StatelessWidget {
                 GoRoute(
                   parentNavigatorKey: _rootNavigator,
                   path: 'inventario',
+                  builder: (context, state) => const InventoryPage(),
+                ),
+              ]),
+          GoRoute(
+              path: '/listinventory',
+              builder: (context, state) => ListInventoryPage(
+                    user: user,
+                    ruc: ruc,
+                    pwd: pwd,
+                  ),
+              routes: [
+                GoRoute(
+                  parentNavigatorKey: _rootNavigator,
+                  path: 'listinventory',
                   builder: (context, state) => const InventoryPage(),
                 ),
               ]),

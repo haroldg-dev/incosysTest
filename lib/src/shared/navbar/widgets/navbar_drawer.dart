@@ -10,8 +10,7 @@ class NavbarDrawer extends StatelessWidget {
     return Drawer(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(50), bottomRight: Radius.circular(50)),
+          borderRadius: BorderRadius.only(topRight: Radius.circular(50), bottomRight: Radius.circular(50)),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -23,19 +22,17 @@ class NavbarDrawer extends StatelessWidget {
                 alignment: Alignment.topRight,
                 child: IconButton(
                     style: ButtonStyle(
-                      overlayColor: MaterialStateColor.resolveWith(
-                          (states) => const Color.fromARGB(255, 255, 255, 255)),
+                      overlayColor:
+                          MaterialStateColor.resolveWith((states) => const Color.fromARGB(255, 255, 255, 255)),
                     ),
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: const Icon(EPartnerIcons.times,
-                        color: Color.fromRGBO(0, 0, 0, 1), size: 30)),
+                    icon: const Icon(EPartnerIcons.times, color: Color.fromRGBO(0, 0, 0, 1), size: 30)),
               ),
               TextButton(
                   style: ButtonStyle(
-                      overlayColor: MaterialStateColor.resolveWith(
-                          (states) => const Color.fromRGBO(255, 0, 0, 0.183))),
+                      overlayColor: MaterialStateColor.resolveWith((states) => const Color.fromRGBO(255, 0, 0, 0.183))),
                   onPressed: () {
                     Navigator.pop(context);
                     context.go('/');
@@ -50,11 +47,31 @@ class NavbarDrawer extends StatelessWidget {
                         ),
                         SizedBox(width: 13),
                         Expanded(
-                          child: Text("Home",
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.normal)),
+                          child: Text("Almacén y ubicación",
+                              style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.normal)),
+                        )
+                      ],
+                    ),
+                  )),
+              TextButton(
+                  style: ButtonStyle(
+                      overlayColor: MaterialStateColor.resolveWith((states) => const Color.fromRGBO(255, 0, 0, 0.183))),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    context.go('/listinventory');
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    child: const Row(
+                      children: [
+                        Icon(
+                          EPartnerIcons.papers,
+                          color: Colors.black,
+                        ),
+                        SizedBox(width: 13),
+                        Expanded(
+                          child: Text("Lista de Inventario",
+                              style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.normal)),
                         )
                       ],
                     ),
@@ -66,10 +83,8 @@ class NavbarDrawer extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: TextButton(
                       style: ButtonStyle(
-                        overlayColor: MaterialStateColor.resolveWith(
-                            (states) => const Color.fromARGB(255, 0, 0, 0)),
-                        backgroundColor: MaterialStateColor.resolveWith(
-                            (states) => const Color.fromARGB(255, 0, 0, 0)),
+                        overlayColor: MaterialStateColor.resolveWith((states) => const Color.fromARGB(255, 0, 0, 0)),
+                        backgroundColor: MaterialStateColor.resolveWith((states) => const Color.fromARGB(255, 0, 0, 0)),
                       ),
                       onPressed: () {
                         context.go('/login');
