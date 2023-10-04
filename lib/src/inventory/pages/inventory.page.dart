@@ -61,7 +61,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
 
     return Scaffold(
       key: scaffoldKey,
-      drawer: const NavbarDrawer(),
+      drawer: NavbarDrawer(),
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: AppBar(

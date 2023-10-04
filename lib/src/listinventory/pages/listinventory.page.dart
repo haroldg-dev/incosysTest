@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:incosys/src/listinventory/providers/listinventory.provider.dart';
-import 'package:incosys/src/shared/helpers/epartnet.icons.dart';
 import 'package:incosys/src/listinventory/widgets/listinventory_option.dart';
 import 'package:incosys/src/shared/navbar/widgets/navbar_drawer.dart';
 import 'package:incosys/src/listinventory/widgets/listfilter.dart';
@@ -42,7 +41,7 @@ class ListInventoryPageState extends ConsumerState<ListInventoryPage> {
       key: scaffoldKey,
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
-      drawer: const NavbarDrawer(),
+      drawer: NavbarDrawer(),
       appBar: AppBar(
         actions: <Widget>[
           IconButton(
