@@ -1,4 +1,5 @@
 import 'package:get_storage/get_storage.dart';
+import 'package:incosys/src/localdb/providers/localdb.provider.dart';
 import 'package:incosys/src/shared/helpers/epartnet.icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,14 +23,15 @@ class LoginFormState extends ConsumerState<LoginForm> {
   @override
   void initState() {
     super.initState();
+    ref.read(localdbProvider.notifier).getLocalDB("LIMPIAR");
     ref.read(seguridadUserProvider.notifier).logout();
   }
 
   @override
   Widget build(BuildContext context) {
-    /* ruc.text = '20603280157';
+    ruc.text = '22222222222';
     user.text = 'esau.hernandez@gmail.com';
-    password.text = '88552233'; */
+    password.text = '88552233';
 
     return Column(
       children: [

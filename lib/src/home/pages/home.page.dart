@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:incosys/src/home/pages/scanner.page.dart';
 import 'package:incosys/src/home/providers/almacen.provider.dart';
+import 'package:incosys/src/home/providers/articulos.provider.dart';
 import 'package:incosys/src/home/providers/ubicacion.provider.dart';
 import 'package:incosys/src/login/providers/seguridaduser.provider.dart';
 import 'package:incosys/src/shared/navbar/widgets/navbar_drawer.dart';
@@ -28,6 +29,7 @@ class HomePage extends ConsumerStatefulWidget {
 class HomePageState extends ConsumerState<HomePage> {
   late String codAlmacen;
   late String nomAlmacen;
+  late String conArticulos;
   final String? user;
   final String? ruc;
   final String? pwd;
@@ -59,7 +61,8 @@ class HomePageState extends ConsumerState<HomePage> {
     final ubicacionController = TextEditingController();
     final conteoController = TextEditingController();
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+    ubicacionController.text = "ubiTest";
+    conteoController.text = "1";
     return Scaffold(
       key: scaffoldKey,
       resizeToAvoidBottomInset: false,
@@ -86,15 +89,21 @@ class HomePageState extends ConsumerState<HomePage> {
         */
         title: const Text(
           "Seleccionar almacén y ubicación",
-          style: TextStyle(color: Colors.white, fontFamily: 'Roboto', fontSize: 16, fontWeight: FontWeight.w300),
+          style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'Roboto',
+              fontSize: 16,
+              fontWeight: FontWeight.w300),
         ),
         centerTitle: true,
         toolbarHeight: 50,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(25), bottomLeft: Radius.circular(25)),
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(25),
+              bottomLeft: Radius.circular(25)),
         ),
-        elevation: 2.00,
-        backgroundColor: Colors.black,
+        elevation: 3.00,
+        backgroundColor: const Color.fromRGBO(51, 102, 102, 1),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -121,11 +130,17 @@ class HomePageState extends ConsumerState<HomePage> {
                   height: 80,
                 ), //Almacen
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                   child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
-                          boxShadow: const [BoxShadow(color: Colors.black38, blurRadius: 3.0, spreadRadius: 0.6)]),
+                          boxShadow: const [
+                            BoxShadow(
+                                color: Colors.black38,
+                                blurRadius: 3.0,
+                                spreadRadius: 0.6)
+                          ]),
                       child: ButtonTheme(
                           alignedDropdown: true,
                           child: DropdownButtonFormField<String>(
@@ -134,26 +149,35 @@ class HomePageState extends ConsumerState<HomePage> {
                               icon: const Icon(Icons.keyboard_arrow_down),
                               hint: const Text(
                                 "Seleccione almacen",
-                                style: TextStyle(color: Color.fromRGBO(100, 100, 100, 1)),
+                                style: TextStyle(
+                                    color: Color.fromRGBO(100, 100, 100, 1)),
                               ),
                               decoration: const InputDecoration(
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(width: 0, color: Color.fromRGBO(26, 47, 76, 1)),
-                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      width: 0,
+                                      color: Color.fromRGBO(26, 47, 76, 1)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
                                 ),
                                 filled: true,
                                 fillColor: Colors.white,
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(width: 2, color: Colors.white60),
-                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                      width: 2, color: Colors.white60),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
                                 ),
                               ),
                               style: const TextStyle(
-                                  color: Color.fromRGBO(100, 100, 100, 1), fontSize: 14, fontWeight: FontWeight.normal),
+                                  color: Color.fromRGBO(100, 100, 100, 1),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.normal),
                               onChanged: (String? newValue) {
                                 List<String> aux = newValue!.split('/');
                                 codAlmacen = aux[0];
                                 nomAlmacen = aux[1];
+                                conArticulos = aux[2];
                                 /* setState(() {
                                   
                                   //codAlmacen = newValue!;
@@ -162,10 +186,13 @@ class HomePageState extends ConsumerState<HomePage> {
                               items: ref
                                   .watch(almacenProvider)
                                   .map((op) => DropdownMenuItem(
-                                        value: '${op.codAlmacen}/${op.nomAlmacen}',
+                                        value:
+                                            '${op.codAlmacen}/${op.nomAlmacen}/${op.conArticulos}',
                                         child: Text(
                                           op.nomAlmacen,
-                                          style: const TextStyle(color: Color.fromRGBO(100, 100, 100, 1)),
+                                          style: const TextStyle(
+                                              color: Color.fromRGBO(
+                                                  100, 100, 100, 1)),
                                         ),
                                       ))
                                   .toList()))),
@@ -175,7 +202,8 @@ class HomePageState extends ConsumerState<HomePage> {
                 ),
                 //Ubicacion
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -192,8 +220,9 @@ class HomePageState extends ConsumerState<HomePage> {
                         icon: const Icon(Icons.qr_code_scanner),
                         onPressed: () => showDialog<String>(
                           context: context,
-                          builder: (BuildContext context) =>
-                              Dialog.fullscreen(child: ScannerPage(controller: ubicacionController)),
+                          builder: (BuildContext context) => Dialog.fullscreen(
+                              child:
+                                  ScannerPage(controller: ubicacionController)),
                         ),
                       ),
                     ],
@@ -205,7 +234,8 @@ class HomePageState extends ConsumerState<HomePage> {
                 ),
                 //Conteo
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                   child: VersionOneTextField(
                     controller: conteoController,
                     name: "Numero de Conteo",
@@ -218,43 +248,63 @@ class HomePageState extends ConsumerState<HomePage> {
                   height: 30,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
                   // ignore: sized_box_for_whitespace
                   child: Container(
                     width: double.infinity,
                     height: 55,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromRGBO(51, 102, 102, 1),
+                          backgroundColor:
+                              const Color.fromRGBO(51, 102, 102, 1),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           )),
                       onPressed: () {
-                        if (codAlmacen != '' && ubicacionController.text != '' && conteoController.text != '') {
+                        if (codAlmacen != '' &&
+                            ubicacionController.text != '' &&
+                            conteoController.text != '') {
                           ref.read(ubicacionProvider.notifier).getUbicacion(
                               codAlmacen: codAlmacen,
                               nomUbicacion: ubicacionController.text,
                               nomAlmacen: nomAlmacen,
                               conteo: conteoController.text,
+                              conArticulos: conArticulos,
                               afterGetData: () {
-                                if (ref.watch(ubicacionProvider).resultado != 'OK') {
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                    content: Text(ref.watch(ubicacionProvider).resultado),
+                                if (ref.watch(ubicacionProvider).resultado !=
+                                    'OK') {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text(
+                                        ref.watch(ubicacionProvider).resultado),
                                   ));
                                 } else {
-                                  context.go('/inventario');
+                                  if (conArticulos == "T") {
+                                    ref
+                                        .read(articuloProvider.notifier)
+                                        .loadArticulos(codAlmacen);
+                                    context.go('/inventario');
+                                  } else {
+                                    context.go('/inventario');
+                                  }
                                 }
                               });
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                            content: Text("Ventana  los campos son obligatorios"),
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content:
+                                Text("Ventana  los campos son obligatorios"),
                           ));
                         }
                       },
                       child: const Text(
                         'Aceptar',
                         style: TextStyle(
-                            fontSize: 16, fontFamily: 'Roboto', fontWeight: FontWeight.w900, color: Colors.white),
+                            fontSize: 16,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white),
                       ),
                     ),
                   ),

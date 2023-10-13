@@ -16,6 +16,7 @@ class UbicacionController {
     String nomUbicacion = '',
     String nomAlmacen = '',
     String conteo = '',
+    String conArticulos = '',
   }) async {
     final authenticatedUser = {
       "ruc": ruc,
@@ -34,7 +35,8 @@ class UbicacionController {
         ubicacionResponse.data![0],
         response.data[0]["resultado"],
         nomAlmacen,
-        conteo);
+        conteo,
+        conArticulos);
 
     return ubicacion;
   }

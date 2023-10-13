@@ -3,7 +3,7 @@ import 'package:incosys/src/apis/ubicacion/model/ubicacion.data.model.dart';
 
 class UbicacionMapper {
   static Ubicacion dataToEntity(UbicacionData apiUbicacion, String resultado,
-          String nomAlmacen, String conteo) =>
+          String nomAlmacen, String conteo, String conArticulos) =>
       Ubicacion(
         activo: apiUbicacion.activo,
         codUbicacion: apiUbicacion.codUbicacion,
@@ -12,5 +12,6 @@ class UbicacionMapper {
         nomAlmacen: nomAlmacen,
         resultado: resultado,
         conteo: conteo,
+        conArticulos: conArticulos,
       );
 }

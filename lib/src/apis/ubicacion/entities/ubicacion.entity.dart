@@ -6,6 +6,7 @@ class Ubicacion {
   final String nomAlmacen;
   final String resultado;
   final String conteo;
+  final String conArticulos;
   Ubicacion(
       {required this.activo,
       required this.codUbicacion,
@@ -13,5 +14,6 @@ class Ubicacion {
       required this.nomUbicacion,
       required this.nomAlmacen,
       required this.resultado,
-      required this.conteo});
+      required this.conteo,
+      required this.conArticulos});
 }

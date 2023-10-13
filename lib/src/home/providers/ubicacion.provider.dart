@@ -16,13 +16,15 @@ class UbicacionNotifier extends StateNotifier<Ubicacion> {
             codAlmacen: 0,
             codUbicacion: 0,
             nomAlmacen: '',
-            conteo: ''));
+            conteo: '',
+            conArticulos: ''));
 
   Future<void> getUbicacion(
       {String codAlmacen = '',
       String nomUbicacion = '',
       String nomAlmacen = '',
       String conteo = '',
+      String conArticulos = '',
       required Function afterGetData}) async {
     SeguridadUser userData = ref.read(seguridadUserProvider);
 
@@ -34,7 +36,8 @@ class UbicacionNotifier extends StateNotifier<Ubicacion> {
         codAlmacen: codAlmacen,
         nomUbicacion: nomUbicacion,
         nomAlmacen: nomAlmacen,
-        conteo: conteo);
+        conteo: conteo,
+        conArticulos: conArticulos);
 
     state = ubicacion;
     afterGetData();

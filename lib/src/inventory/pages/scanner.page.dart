@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:incosys/src/home/providers/articulos.provider.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:incosys/src/shared/helpers/epartnet.icons.dart';
 
 class ScannerPage extends ConsumerStatefulWidget {
   final TextEditingController controller;
-
-  const ScannerPage({super.key, required this.controller});
+  final String modo;
+  const ScannerPage({super.key, required this.controller, required this.modo});
 
   @override
   ScannerPageState createState() => ScannerPageState();
@@ -14,7 +15,6 @@ class ScannerPage extends ConsumerStatefulWidget {
 
 class ScannerPageState extends ConsumerState<ScannerPage> {
   MobileScannerController cameraController = MobileScannerController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,8 +69,58 @@ class ScannerPageState extends ConsumerState<ScannerPage> {
       body: MobileScanner(
         controller: cameraController,
         onDetect: (capture) {
-          widget.controller.text = "${capture.barcodes[0].rawValue}";
-          Navigator.of(context).pop();
+          if (widget.modo == "T") {
+            ref.read(articuloProvider.notifier).searchByBarCode(
+                  data: capture.barcodes[0].rawValue!,
+                  after: () => {
+                    if (ref.watch(articuloProvider).isEmpty)
+                      {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (BuildContext context) {
+                            return const Dialog(
+                              backgroundColor: Colors.white30,
+                              shadowColor: Colors.black,
+                              child: SizedBox(
+                                height: 80,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                    SizedBox(
+                                      width: 20,
+                                    ),
+                                    Text(
+                                      "No exite articulo",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w900,
+                                          color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      }
+                    else
+                      {
+                        widget.controller.text =
+                            "${capture.barcodes[0].rawValue}",
+                        Navigator.of(context).pop(),
+                      }
+                  },
+                );
+          } else {
+            widget.controller.text = "${capture.barcodes[0].rawValue}";
+            Navigator.of(context).pop();
+          }
         },
       ),
     );
