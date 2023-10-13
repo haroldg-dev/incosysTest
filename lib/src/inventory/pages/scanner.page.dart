@@ -5,9 +5,14 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:incosys/src/shared/helpers/epartnet.icons.dart';
 
 class ScannerPage extends ConsumerStatefulWidget {
-  final TextEditingController controller;
+  final TextEditingController codigoController;
+  final TextEditingController descripcionController;
   final String modo;
-  const ScannerPage({super.key, required this.controller, required this.modo});
+  const ScannerPage(
+      {super.key,
+      required this.codigoController,
+      required this.descripcionController,
+      required this.modo});
 
   @override
   ScannerPageState createState() => ScannerPageState();
@@ -15,8 +20,10 @@ class ScannerPage extends ConsumerStatefulWidget {
 
 class ScannerPageState extends ConsumerState<ScannerPage> {
   MobileScannerController cameraController = MobileScannerController();
+
   @override
   Widget build(BuildContext context) {
+    final articulos = ref.watch(articuloProvider);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -73,7 +80,7 @@ class ScannerPageState extends ConsumerState<ScannerPage> {
             ref.read(articuloProvider.notifier).searchByBarCode(
                   data: capture.barcodes[0].rawValue!,
                   after: () => {
-                    if (ref.watch(articuloProvider).isEmpty)
+                    if (articulos.isEmpty)
                       {
                         showDialog(
                           context: context,
@@ -88,9 +95,7 @@ class ScannerPageState extends ConsumerState<ScannerPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    CircularProgressIndicator(
-                                      color: Colors.white,
-                                    ),
+                                    Icon(Icons.error),
                                     SizedBox(
                                       width: 20,
                                     ),
@@ -111,14 +116,16 @@ class ScannerPageState extends ConsumerState<ScannerPage> {
                       }
                     else
                       {
-                        widget.controller.text =
+                        widget.codigoController.text =
                             "${capture.barcodes[0].rawValue}",
+                        widget.descripcionController.text =
+                            articulos[0].nomArticulo,
                         Navigator.of(context).pop(),
                       }
                   },
                 );
           } else {
-            widget.controller.text = "${capture.barcodes[0].rawValue}";
+            widget.codigoController.text = "${capture.barcodes[0].rawValue}";
             Navigator.of(context).pop();
           }
         },

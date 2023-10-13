@@ -33,7 +33,8 @@ class MyApp extends StatelessWidget {
   final String? pwd;
   MyApp({super.key, required this.user, required this.ruc, required this.pwd});
 
-  final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
+  final GlobalKey<NavigatorState> _rootNavigator =
+      GlobalKey(debugLabel: 'root');
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +79,7 @@ class MyApp extends StatelessWidget {
         ],
       ),
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
+      theme: ThemeData(primarySwatch: Colors.grey),
     );
   }
 }

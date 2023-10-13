@@ -33,6 +33,6 @@ class Article {
         costo: json["Costo"],
         umb: json["Umb"],
         id: json["id"],
-        codArticulo: json["Cod_Articulo"],
+        codArticulo: json["Cod_Articulo"].toString(),
       );
 }

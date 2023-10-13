@@ -30,6 +30,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
   final cantidadController = TextEditingController();
   final observacionController = TextEditingController();
   late BuildContext dialogContext;
+
   @override
   void initState() {
     super.initState();
@@ -61,6 +62,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+    final articulo = ref.watch(articuloProvider);
 
     return Scaffold(
       key: scaffoldKey,
@@ -134,13 +136,86 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                         ),
                       ),
                       IconButton(
+                          color: Colors.white,
+                          icon: const Icon(Icons.search),
+                          onPressed: () => {
+                                if (ubiSelected.conArticulos == "T")
+                                  {
+                                    ref
+                                        .read(articuloProvider.notifier)
+                                        .searchByBarCode(
+                                          data: codigoController.text,
+                                          after: () => {
+                                            if (articulo.isEmpty)
+                                              {
+                                                showDialog(
+                                                  context: context,
+                                                  barrierDismissible: true,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return const Dialog(
+                                                      backgroundColor:
+                                                          Colors.white30,
+                                                      shadowColor: Colors.black,
+                                                      child: SizedBox(
+                                                        height: 80,
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            CircularProgressIndicator(
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 20,
+                                                            ),
+                                                            Text(
+                                                              "No exite articulo",
+                                                              style: TextStyle(
+                                                                  fontSize: 14,
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w900,
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              }
+                                            else
+                                              {
+                                                descripcionController.text =
+                                                    articulo[0].nomArticulo,
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                        const SnackBar(
+                                                  content: Text(
+                                                      "ARTICULO ENCONTRADO"),
+                                                ))
+                                              }
+                                          },
+                                        )
+                                  }
+                              }),
+                      IconButton(
                         color: Colors.white,
                         icon: const Icon(Icons.qr_code_scanner),
                         onPressed: () => showDialog<String>(
                           context: context,
                           builder: (BuildContext context) => Dialog.fullscreen(
                               child: ScannerPage(
-                            controller: codigoController,
+                            codigoController: codigoController,
+                            descripcionController: descripcionController,
                             modo: ubiSelected.conArticulos,
                           )),
                         ),
