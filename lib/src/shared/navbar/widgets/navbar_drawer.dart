@@ -5,12 +5,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 var user;
 var ruc;
+var firstName;
+var lastName;
+var nombre;
 
 Future getdatos() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences pref = await SharedPreferences.getInstance();
   user = pref.getString('user').toString();
   ruc = pref.getString('ruc').toString();
+  firstName = pref.getString('firstName').toString();
+  lastName = pref.getString('lastName').toString();
+  nombre = firstName + ' ' + lastName;
   await initialization(null);
 }
 
@@ -181,6 +187,12 @@ class NavbarDrawer extends StatelessWidget {
                   )),
               SizedBox(
                 height: 100,
+              ),
+              Text('Nombre',
+                  style: TextStyle(color: Color.fromARGB(255, 66, 59, 59), fontSize: 13, fontWeight: FontWeight.bold)),
+              Text(nombre.toString(), style: TextStyle(color: Colors.black, fontSize: 14, fontWeight: FontWeight.bold)),
+              SizedBox(
+                height: 20,
               ),
               Text('Usuario',
                   style: TextStyle(color: Color.fromARGB(255, 66, 59, 59), fontSize: 13, fontWeight: FontWeight.bold)),

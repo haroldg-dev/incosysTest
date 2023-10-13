@@ -8,15 +8,7 @@ class SeguridadUserNotifier extends StateNotifier<SeguridadUser> {
 
   SeguridadUserNotifier()
       : super(SeguridadUser(
-            nomEmpresa: '',
-            token: '',
-            lastName: '',
-            uid: 0,
-            firstName: '',
-            log: '',
-            email: '',
-            pwd: '',
-            ruc: ''));
+            nomEmpresa: '', token: '', lastName: '', uid: 0, firstName: '', log: '', email: '', pwd: '', ruc: ''));
 
   Future<void> postLogin(
       {String ruc = '',
@@ -29,12 +21,16 @@ class SeguridadUserNotifier extends StateNotifier<SeguridadUser> {
       uid: uid,
       pwd: pwd,
     );
+    String firstName = seguridadUser.firstName;
+    String lastName = seguridadUser.lastName;
     if (saveSession == true) {
       SharedPreferences pref = await SharedPreferences.getInstance();
       pref.setString('saved', 'true');
       pref.setString("user", uid);
       pref.setString('ruc', ruc);
       pref.setString('pass', pwd);
+      pref.setString('firstName', firstName);
+      pref.setString('lastName', lastName);
     }
 
     state = seguridadUser;
@@ -50,12 +46,13 @@ class SeguridadUserNotifier extends StateNotifier<SeguridadUser> {
             pref.remove("user"),
             pref.remove('ruc'),
             pref.remove('pass'),
+            pref.remove('firstName'),
+            pref.remove('lastName'),
           }
         : {};
   }
 }
 
-final seguridadUserProvider =
-    StateNotifierProvider<SeguridadUserNotifier, SeguridadUser>((ref) {
+final seguridadUserProvider = StateNotifierProvider<SeguridadUserNotifier, SeguridadUser>((ref) {
   return SeguridadUserNotifier();
 });
