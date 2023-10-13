@@ -135,78 +135,84 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                           onChanged: null,
                         ),
                       ),
-                      IconButton(
-                          color: Colors.white,
-                          icon: const Icon(Icons.search),
-                          onPressed: () => {
-                                if (ubiSelected.conArticulos == "T")
-                                  {
-                                    ref
-                                        .read(articuloProvider.notifier)
-                                        .searchByBarCode(
-                                          data: codigoController.text,
-                                          after: () => {
-                                            if (articulo.isEmpty)
-                                              {
-                                                showDialog(
-                                                  context: context,
-                                                  barrierDismissible: true,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return const Dialog(
-                                                      backgroundColor:
-                                                          Colors.white30,
-                                                      shadowColor: Colors.black,
-                                                      child: SizedBox(
-                                                        height: 80,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            CircularProgressIndicator(
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                            SizedBox(
-                                                              width: 20,
-                                                            ),
-                                                            Text(
-                                                              "No exite articulo",
-                                                              style: TextStyle(
-                                                                  fontSize: 14,
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w900,
+                      ubiSelected.conArticulos == "T"
+                          ? IconButton(
+                              color: Colors.white,
+                              icon: const Icon(Icons.search),
+                              onPressed: () => {
+                                    if (ubiSelected.conArticulos == "T")
+                                      {
+                                        ref
+                                            .read(articuloProvider.notifier)
+                                            .searchByBarCode(
+                                              data: codigoController.text,
+                                              after: () => {
+                                                if (articulo.isEmpty)
+                                                  {
+                                                    showDialog(
+                                                      context: context,
+                                                      barrierDismissible: true,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return const Dialog(
+                                                          backgroundColor:
+                                                              Colors.white30,
+                                                          shadowColor:
+                                                              Colors.black,
+                                                          child: SizedBox(
+                                                            height: 80,
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              children: [
+                                                                CircularProgressIndicator(
                                                                   color: Colors
-                                                                      .white),
+                                                                      .white,
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 20,
+                                                                ),
+                                                                Text(
+                                                                  "No exite articulo",
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          14,
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w900,
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                              ],
                                                             ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              }
-                                            else
-                                              {
-                                                descripcionController.text =
-                                                    articulo[0].nomArticulo,
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                        const SnackBar(
-                                                  content: Text(
-                                                      "ARTICULO ENCONTRADO"),
-                                                ))
-                                              }
-                                          },
-                                        )
-                                  }
-                              }),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ),
+                                                  }
+                                                else
+                                                  {
+                                                    descripcionController.text =
+                                                        articulo[0].nomArticulo,
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                            const SnackBar(
+                                                      content: Text(
+                                                          "ARTICULO ENCONTRADO"),
+                                                    ))
+                                                  }
+                                              },
+                                            )
+                                      }
+                                  })
+                          : const SizedBox(),
                       IconButton(
                         color: Colors.white,
                         icon: const Icon(Icons.qr_code_scanner),
@@ -580,8 +586,7 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                 );
                                 if (codigoController.text != '' &&
                                     descripcionController.text != '' &&
-                                    cantidadController.text != '' &&
-                                    etiqueta != '') {
+                                    cantidadController.text != '') {
                                   ref
                                       .read(inventarioProvider.notifier)
                                       .setInventario(
