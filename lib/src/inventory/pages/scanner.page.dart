@@ -80,7 +80,7 @@ class ScannerPageState extends ConsumerState<ScannerPage> {
             ref.read(articuloProvider.notifier).searchByBarCode(
                   data: capture.barcodes[0].rawValue!,
                   after: () => {
-                    if (articulos.isEmpty)
+                    if (ref.watch(articuloProvider).isEmpty)
                       {
                         showDialog(
                           context: context,
@@ -119,7 +119,7 @@ class ScannerPageState extends ConsumerState<ScannerPage> {
                         widget.codigoController.text =
                             "${capture.barcodes[0].rawValue}",
                         widget.descripcionController.text =
-                            articulos[0].nomArticulo,
+                            ref.watch(articuloProvider)[0].nomArticulo,
                         Navigator.of(context).pop(),
                       }
                   },

@@ -36,13 +36,17 @@ class InventarioNotifier extends StateNotifier<Inventario> {
       String observacion = '',
       required List<String> imagenes,
       required Function afterSetData}) async {
-    final bytes = Io.File(etiqueta).readAsBytesSync();
-    String etiqueta64 = base64Encode(bytes);
+    if (etiqueta != '') {
+      final bytes = Io.File(etiqueta).readAsBytesSync();
+      etiqueta = base64Encode(bytes);
+    }
 
     List<Object> imagenes64 = [];
-    for (var articulo in imagenes) {
-      final artBytes = Io.File(articulo).readAsBytesSync();
-      imagenes64.add({'imagen${imagenes64.length}': base64Encode(artBytes)});
+    if (imagenes.isNotEmpty) {
+      for (var articulo in imagenes) {
+        final artBytes = Io.File(articulo).readAsBytesSync();
+        imagenes64.add({'imagen${imagenes64.length}': base64Encode(artBytes)});
+      }
     }
 
     SeguridadUser userData = ref.read(seguridadUserProvider);
@@ -60,7 +64,7 @@ class InventarioNotifier extends StateNotifier<Inventario> {
       cantidad: cantidad,
       conteo: conteo,
       observacion: observacion,
-      etiqueta: etiqueta64,
+      etiqueta: etiqueta,
       imagenes: imagenes64,
     );
     await Future.delayed(const Duration(seconds: 1));

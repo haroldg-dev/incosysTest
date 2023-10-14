@@ -147,7 +147,9 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                             .searchByBarCode(
                                               data: codigoController.text,
                                               after: () => {
-                                                if (articulo.isEmpty)
+                                                if (ref
+                                                    .watch(articuloProvider)
+                                                    .isEmpty)
                                                   {
                                                     showDialog(
                                                       context: context,
@@ -198,8 +200,10 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                                   }
                                                 else
                                                   {
-                                                    descripcionController.text =
-                                                        articulo[0].nomArticulo,
+                                                    descripcionController.text = ref
+                                                        .watch(
+                                                            articuloProvider)[0]
+                                                        .nomArticulo,
                                                     ScaffoldMessenger.of(
                                                             context)
                                                         .showSnackBar(
@@ -637,12 +641,12 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                             }
                                           });
                                 } else {
-                                  Navigator.pop(context);
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(const SnackBar(
                                     content: Text(
                                         "Ventana  los campos son obligatorios"),
                                   ));
+                                  Navigator.pop(context);
                                 }
                               },
                               label: const Text(
