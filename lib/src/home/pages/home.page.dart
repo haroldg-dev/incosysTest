@@ -61,8 +61,8 @@ class HomePageState extends ConsumerState<HomePage> {
     final ubicacionController = TextEditingController();
     final conteoController = TextEditingController();
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-    ubicacionController.text = "ubiTest";
-    conteoController.text = "1";
+    // ubicacionController.text = "ubiTest";
+    // conteoController.text = "1";
     return Scaffold(
       key: scaffoldKey,
       resizeToAvoidBottomInset: false,
