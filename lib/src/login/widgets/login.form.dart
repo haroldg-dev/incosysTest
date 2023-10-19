@@ -29,9 +29,9 @@ class LoginFormState extends ConsumerState<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    // ruc.text = '22222222222';
-    // user.text = 'esau.hernandez@gmail.com';
-    // password.text = '88552233';
+    ruc.text = '22222222222';
+    user.text = 'esau.hernandez@gmail.com';
+    password.text = '88552233';
 
     return Column(
       children: [

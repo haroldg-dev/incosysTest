@@ -38,6 +38,7 @@ class HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
+
     if (user != null) {
       ref.read(seguridadUserProvider.notifier).postLogin(
             ruc: ruc!,
@@ -200,6 +201,21 @@ class HomePageState extends ConsumerState<HomePage> {
                 const SizedBox(
                   height: 30,
                 ),
+                //Conteo
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+                  child: VersionOneTextField(
+                    controller: conteoController,
+                    name: "Numero de Conteo",
+                    type: TextInputType.number,
+                    onChanged: null,
+                  ),
+                ),
+                //Conteo
+                const SizedBox(
+                  height: 30,
+                ),
                 //Ubicacion
                 Padding(
                   padding:
@@ -212,7 +228,12 @@ class HomePageState extends ConsumerState<HomePage> {
                           controller: ubicacionController,
                           name: "Ubicacion",
                           type: TextInputType.text,
-                          onChanged: null,
+                          onChanged: (value) {
+                            ubicacionController.value = TextEditingValue(
+                              text: value.toUpperCase(),
+                              selection: ubicacionController.selection,
+                            );
+                          },
                         ),
                       ),
                       IconButton(
@@ -232,21 +253,6 @@ class HomePageState extends ConsumerState<HomePage> {
                 const SizedBox(
                   height: 30,
                 ),
-                //Conteo
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
-                  child: VersionOneTextField(
-                    controller: conteoController,
-                    name: "Numero de Conteo",
-                    type: TextInputType.number,
-                    onChanged: null,
-                  ),
-                ),
-                //Conteo
-                const SizedBox(
-                  height: 30,
-                ),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
@@ -262,6 +268,7 @@ class HomePageState extends ConsumerState<HomePage> {
                             borderRadius: BorderRadius.circular(10),
                           )),
                       onPressed: () {
+                        ref.read(articuloProvider.notifier).resetArticulos();
                         if (codAlmacen != '' &&
                             ubicacionController.text != '' &&
                             conteoController.text != '') {

@@ -251,6 +251,27 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                   ),
                 ),
                 //Descripcion
+                //UMB
+                ubiSelected.conArticulos == 'T' && articulo.isNotEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 35),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          width: double.infinity,
+                          child: Text(
+                            "UMB: ${articulo[0].umb}",
+                            textAlign: TextAlign.start,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(
+                        height: 0,
+                      ),
+                //UMB
                 //Cantidad
                 Padding(
                   padding:
@@ -591,55 +612,122 @@ class InventoryPageState extends ConsumerState<InventoryPage> {
                                 if (codigoController.text != '' &&
                                     descripcionController.text != '' &&
                                     cantidadController.text != '') {
-                                  ref
-                                      .read(inventarioProvider.notifier)
-                                      .setInventario(
-                                          codAlmacen:
-                                              ubiSelected.codAlmacen.toString(),
-                                          codUbicacion: ubiSelected.codUbicacion
-                                              .toString(),
-                                          codArticulo: codigoController.text,
-                                          nomArticulo:
-                                              descripcionController.text,
-                                          cantidad: cantidadController.text,
-                                          conteo: ubiSelected.conteo,
-                                          observacion:
-                                              observacionController.text,
-                                          etiqueta: etiqueta,
-                                          imagenes: fotoArticulos,
-                                          afterSetData: () {
-                                            if (ref
-                                                    .watch(ubicacionProvider)
-                                                    .resultado !=
-                                                'OK') {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                content: Text(ref
-                                                    .watch(ubicacionProvider)
-                                                    .resultado),
-                                              ));
-                                              Navigator.pop(context);
-                                            } else {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(const SnackBar(
-                                                content:
-                                                    Text("Grabación Exitosa"),
-                                              ));
-                                              Navigator.pop(context);
-                                              ref
-                                                  .read(
-                                                      articuloProvider.notifier)
-                                                  .resetArticulos();
-                                              setState(() {
-                                                codigoController.text = '';
-                                                descripcionController.text = '';
-                                                cantidadController.text = '';
-                                                observacionController.text = '';
-                                                etiqueta = '';
-                                                fotoArticulos = [];
-                                              });
-                                            }
-                                          });
+                                  if (ubiSelected.conArticulos == "T" &&
+                                      articulo.isNotEmpty) {
+                                    ref
+                                        .read(inventarioProvider.notifier)
+                                        .setInventario(
+                                            codAlmacen: ubiSelected.codAlmacen
+                                                .toString(),
+                                            codUbicacion: ubiSelected
+                                                .codUbicacion
+                                                .toString(),
+                                            codArticulo: codigoController.text,
+                                            nomArticulo:
+                                                descripcionController.text,
+                                            cantidad: cantidadController.text,
+                                            conteo: ubiSelected.conteo,
+                                            observacion:
+                                                observacionController.text,
+                                            etiqueta: etiqueta,
+                                            imagenes: fotoArticulos,
+                                            afterSetData: () {
+                                              if (ref
+                                                      .watch(ubicacionProvider)
+                                                      .resultado !=
+                                                  'OK') {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                  content: Text(ref
+                                                      .watch(ubicacionProvider)
+                                                      .resultado),
+                                                ));
+                                                Navigator.pop(context);
+                                              } else {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                        const SnackBar(
+                                                  content:
+                                                      Text("Grabación Exitosa"),
+                                                ));
+                                                Navigator.pop(context);
+                                                ref
+                                                    .read(articuloProvider
+                                                        .notifier)
+                                                    .resetArticulos();
+                                                setState(() {
+                                                  codigoController.text = '';
+                                                  descripcionController.text =
+                                                      '';
+                                                  cantidadController.text = '';
+                                                  observacionController.text =
+                                                      '';
+                                                  etiqueta = '';
+                                                  fotoArticulos = [];
+                                                });
+                                              }
+                                            });
+                                  } else if (ubiSelected.conArticulos == "F") {
+                                    ref
+                                        .read(inventarioProvider.notifier)
+                                        .setInventario(
+                                            codAlmacen: ubiSelected.codAlmacen
+                                                .toString(),
+                                            codUbicacion: ubiSelected
+                                                .codUbicacion
+                                                .toString(),
+                                            codArticulo: codigoController.text,
+                                            nomArticulo:
+                                                descripcionController.text,
+                                            cantidad: cantidadController.text,
+                                            conteo: ubiSelected.conteo,
+                                            observacion:
+                                                observacionController.text,
+                                            etiqueta: etiqueta,
+                                            imagenes: fotoArticulos,
+                                            afterSetData: () {
+                                              if (ref
+                                                      .watch(ubicacionProvider)
+                                                      .resultado !=
+                                                  'OK') {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                  content: Text(ref
+                                                      .watch(ubicacionProvider)
+                                                      .resultado),
+                                                ));
+                                                Navigator.pop(context);
+                                              } else {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                        const SnackBar(
+                                                  content:
+                                                      Text("Grabación Exitosa"),
+                                                ));
+                                                Navigator.pop(context);
+                                                ref
+                                                    .read(articuloProvider
+                                                        .notifier)
+                                                    .resetArticulos();
+                                                setState(() {
+                                                  codigoController.text = '';
+                                                  descripcionController.text =
+                                                      '';
+                                                  cantidadController.text = '';
+                                                  observacionController.text =
+                                                      '';
+                                                  etiqueta = '';
+                                                  fotoArticulos = [];
+                                                });
+                                              }
+                                            });
+                                  } else {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                      content: Text("Articulo no existe"),
+                                    ));
+                                    Navigator.pop(context);
+                                  }
                                 } else {
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(const SnackBar(
