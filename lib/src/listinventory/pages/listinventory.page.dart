@@ -47,7 +47,7 @@ class ListInventoryPageState extends ConsumerState<ListInventoryPage> {
           IconButton(
             icon: const Icon(
               Icons.settings,
-              color: Colors.white,
+              color: Colors.black,
             ),
             tooltip: 'Filtro de Documentos',
             onPressed: () => showDialog(
@@ -69,7 +69,7 @@ class ListInventoryPageState extends ConsumerState<ListInventoryPage> {
           borderRadius: BorderRadius.only(bottomRight: Radius.circular(25), bottomLeft: Radius.circular(25)),
         ),
         elevation: 2.00,
-        backgroundColor: Colors.black,
+        backgroundColor: const Color.fromRGBO(51, 102, 102, 1),
       ),
       body: Container(
         decoration: const BoxDecoration(

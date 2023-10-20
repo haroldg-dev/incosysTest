@@ -32,29 +32,31 @@ class ListInventoryOption extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: 15,
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w700,
                       height: 0,
                     ),
                   ),
+                  const SizedBox(height: 10),
                   Text(
                     //todo: no se sabe si se va a quedar codBarra ya que hay nulls, en la aplicacion se representan 12345678
                     document.nomArticulo.length > 20 ? document.nomArticulo.substring(0, 20) : document.nomArticulo,
                     style: const TextStyle(
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w300,
-                      fontSize: 14,
+                      fontSize: 16,
                       height: 0,
                     ),
                   ),
+                  const SizedBox(height: 10),
                   Text(
                     //todo: no se sabe si se va a quedar codBarra ya que hay nulls, en la aplicacion se representan 12345678
                     document.nomUbicacion,
                     style: const TextStyle(
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w600,
-                      fontSize: 12,
+                      fontSize: 14,
                       height: 0,
                     ),
                   )
@@ -72,13 +74,14 @@ class ListInventoryOption extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: 10,
+                      fontSize: 13,
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w700,
                       height: 2,
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
                 Text(
                   ' ${document.cantidad.toStringAsFixed(2)}',
                   style: const TextStyle(
